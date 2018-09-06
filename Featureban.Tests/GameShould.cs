@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Featureban.Domain;
 using Featureban.Tests.DSL;
@@ -19,10 +20,34 @@ namespace Featureban.Tests
             };
 
 
-            var game = Create.Game.WithTwoEagleCoin().WithPlayers(playerList).Build();
+            var game = Create.Game
+                .WithTwoEagleCoin()
+                .WithPlayers(playerList)
+                .WithEmptyBoard()
+                .Build();
 
             Assert.Equal(playerList[0].Id, game.Players[0].Id);
             Assert.Equal(playerList[1].Id, game.Players[1].Id);
+
+
+        }
+        //Я как игра позволяю игроку присвоить фичу перед началом игры 
+        [Fact]
+        public void AllowPlayerGetCard_BeforeGameStars()
+        {
+            var playerList = new List<Player>
+            {
+                Create.Player.Build()
+            };
+
+
+            var game = Create.Game
+                .WithTwoEagleCoin()
+                .WithEmptyBoard()
+                .WithPlayers(playerList).Build();
+
+            Assert.Equal(game.Board.Cards.First().Owner.Id, game.Players[0].Id);
+            
 
 
         }

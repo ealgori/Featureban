@@ -15,7 +15,11 @@ namespace Featureban.Tests
         {
             
             var player = Create.Player.Build();
-            var game = Create.Game.WithTwoEagleCoin().WithPlayers(new List<Player> {player}).Build();
+            var game = Create.Game
+                .WithTwoEagleCoin()
+                .WithEmptyBoard()
+                .WithPlayers(new List<Player> {player})
+                .Build();
 
             var coinSide = player.DropCoin(game.Coin);
 

@@ -11,6 +11,7 @@ namespace Featureban.Tests.DSL
     {
         private ICoin coin;
         private List<Player> players;
+        private Board board;
         public GameBuilder WithTwoEagleCoin()
         {
             this.coin = Create.Coin.WhichAlwaysDropOn(CoinSide.Eagle).Build();
@@ -29,9 +30,21 @@ namespace Featureban.Tests.DSL
             return this;
         }
 
+        public GameBuilder WithBoard(Board board)
+        {
+            this.board = board;
+            return this;
+        }
+
+        public GameBuilder WithEmptyBoard()
+        {
+            this.board = new Board(new List<Card>());
+            return this;
+        }
+
         public Game Build()
         {
-            return new Game(players,coin); 
+            return new Game(players,coin,board); 
         }
 
     }

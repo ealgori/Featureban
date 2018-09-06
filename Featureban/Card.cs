@@ -9,11 +9,13 @@ namespace Featureban.Domain
     {
         public CardState State { get; private set; }
         public bool IsBlocked { get; private set; }
+        public Player Owner { get; }
 
-        public Card(CardState state = CardState.Free, bool isBlocked = false)
+        public Card(Player owner=null, CardState state = CardState.Free, bool isBlocked = false)
         {
             this.State = state;
             this.IsBlocked = isBlocked;
+            this.Owner = owner;
         }
 
         public void ChangeStatus(CardState newStatus)
