@@ -12,8 +12,8 @@ namespace Featureban.Tests
         [Fact]
         public void CanDropCoin()
         {
-            var coin = Create.Coin.WhichAlwaysDropOn(CoinSide.Eagle).Build();
-            var player = Create.Player.WithCoin(coin).Build();
+            
+            var player = Create.Player.WithTwoEagleCoin().Build();
 
             var coinSide = player.DropCoin();
 
@@ -21,5 +21,7 @@ namespace Featureban.Tests
 
 
         }
+
+       
     }
 }
