@@ -8,18 +8,16 @@ namespace Featureban.Domain
 {
     public class Player
     {
-        private readonly ICoin _coin;
         public Guid Id { get; }
 
-        public Player(ICoin coin)
+        public Player()
         {
-            _coin = coin;
             Id = Guid.NewGuid();
         }
 
-        public CoinSide DropCoin()
+        public CoinSide DropCoin(ICoin coin)
         {
-            return _coin.Drop();
+            return coin.Drop();
         }
 
 

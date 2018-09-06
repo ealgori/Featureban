@@ -9,5 +9,6 @@ namespace Featureban.Tests.DSL
     {
         public static CoinBuilder Coin => new CoinBuilder();
         public static PlayerBuilder Player => new PlayerBuilder();
+        public static GameBuilder Game => new GameBuilder();
     }
 }
