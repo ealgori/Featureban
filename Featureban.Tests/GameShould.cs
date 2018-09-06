@@ -31,7 +31,7 @@ namespace Featureban.Tests
 
 
         }
-        //Я как игра позволяю игроку присвоить фичу перед началом игры 
+
         [Fact]
         public void AllowPlayerGetCard_BeforeGameStars()
         {

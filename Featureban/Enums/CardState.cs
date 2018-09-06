@@ -6,10 +6,8 @@ namespace Featureban.Domain.Enums
 {
     public enum CardState
     {
-        Free,
         InProgress,
         InTesting,
         Completed
-        
     }
 }

@@ -7,34 +7,35 @@ namespace Featureban.Domain
 {
     public class Card
     {
-        public CardState State { get; private set; }
-        public bool IsBlocked { get; private set; }
-        public Player Owner { get; }
+        public CardState State { get;}
+        public bool IsBlocked { get;}
+        public Player Owner { get;}
 
-        public Card(Player owner=null, CardState state = CardState.Free, bool isBlocked = false)
+        public Card(Player owner, CardState state, bool isBlocked = false)
         {
             this.State = state;
             this.IsBlocked = isBlocked;
             this.Owner = owner;
         }
 
-        public void ChangeStatus(CardState newStatus)
+        public Card ChangeStatus(CardState newStatus)
         {
-            State = newStatus;
+            return new Card(this.Owner, newStatus, true);
         }
 
-        public void Block()
+        public Card Block()
         {
             if(IsBlocked)
                 throw new NotSupportedException("Card is already blocked");
-            IsBlocked = true;
+            return new Card(this.Owner, this.State, true);
 
         }
 
-        public void Unblock()
+        public Card Unblock()
         {
             if(!IsBlocked)
                 throw new NotSupportedException("Card is not blocked");
+            return new Card(this.Owner, this.State, false);
         }
     }
 }

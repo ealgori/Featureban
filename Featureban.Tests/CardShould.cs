@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Featureban.Domain;
 using Featureban.Domain.Enums;
+using Featureban.Tests.DSL;
 using Xunit;
 
 namespace Featureban.Tests
@@ -12,7 +13,7 @@ namespace Featureban.Tests
         [Fact]
         public void ThrowOnBlock_IfBlocked()
         {
-            var card = new Card(isBlocked:true);
+            var card = Create.Card.WhichBlocked().Build();
 
             Assert.Throws<NotSupportedException>(()=>card.Block());
         }
@@ -20,7 +21,7 @@ namespace Featureban.Tests
         [Fact]
         public void ThrowOnUnBlock_IfNotBlocked()
         {
-            var card = new Card(isBlocked: false);
+            var card = Create.Card.Build();
 
             Assert.Throws<NotSupportedException>(() => card.Unblock());
         }
@@ -28,11 +29,11 @@ namespace Featureban.Tests
         [Fact]
         public void ChangeState_OnChangeState()
         {
-            var card = new Card();
+            var card = Create.Card.Build();
 
-            card.ChangeStatus(CardState.InProgress);
+            var changedCard = card.ChangeStatus(CardState.InProgress);
 
-            Assert.Equal(CardState.InProgress, card.State);
+            Assert.Equal(CardState.InProgress, changedCard.State);
         }
 
     }
