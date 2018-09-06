@@ -1,0 +1,13 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using Featureban.Domain.Interfaces;
+
+namespace Featureban.Tests.DSL
+{
+    public static class Create
+    {
+        public static CoinBuilder Coin => new CoinBuilder();
+        public static PlayerBuilder Player => new PlayerBuilder();
+    }
+}
