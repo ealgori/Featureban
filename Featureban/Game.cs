@@ -22,10 +22,11 @@ namespace Featureban.Domain
             Board = board ?? throw new ArgumentException("No board in game");
             Coin = coin ?? throw new ArgumentException("No coin in game");
 
-            foreach (var player in players)
-            {
-                AssignCardToPlayer(player);
-            }
+            if(!Board.Cards.Any())
+                foreach (var player in players)
+                {
+                    AssignCardToPlayer(player);
+                }
             Id = Guid.NewGuid();
             
             
@@ -42,5 +43,9 @@ namespace Featureban.Domain
             };
             this.Board = new Board(cardsList);
         }
+
+
+
+
     }
 }

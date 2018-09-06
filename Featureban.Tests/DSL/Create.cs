@@ -11,5 +11,6 @@ namespace Featureban.Tests.DSL
         public static PlayerBuilder Player => new PlayerBuilder();
         public static GameBuilder Game => new GameBuilder();
         public static CardBuilder Card => new CardBuilder();
+        public static BoardBuilder Board => new BoardBuilder();
     }
 }

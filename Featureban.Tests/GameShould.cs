@@ -23,7 +23,6 @@ namespace Featureban.Tests
             var game = Create.Game
                 .WithTwoEagleCoin()
                 .WithPlayers(playerList)
-                .WithEmptyBoard()
                 .Build();
 
             Assert.Equal(playerList[0].Id, game.Players[0].Id);
@@ -43,11 +42,31 @@ namespace Featureban.Tests
 
             var game = Create.Game
                 .WithTwoEagleCoin()
-                .WithEmptyBoard()
                 .WithPlayers(playerList).Build();
 
             Assert.Equal(game.Board.Cards.First().Owner.Id, game.Players[0].Id);
             
+
+
+        }
+
+        [Fact]
+        public void NotAllowPlayersGetCardsBeforeGameStarts_IfCardsAlreadyTaken()
+        {
+            var playerList = new List<Player>
+            {
+                Create.Player.Build()
+            };
+
+            var card = Create.Card.Build();
+            var board = Create.Board.WithCards(new List<Card> {card}).Build();
+            var game = Create.Game
+                .WithTwoEagleCoin()
+                .WithBoard(board)
+                .WithPlayers(playerList).Build();
+
+            Assert.Equal(card, board.Cards.Single());
+
 
 
         }
