@@ -39,6 +39,19 @@ namespace Featureban.Tests.PlayerBehave
            
         }
 
+        [Fact]
+        public void NotAllowsMoveAnotherPlayerUnblockedCard_IfDropTailsAndNotUnblockedCards()
+        {
+            var moveAnotherPlayerCardForwardBehaviour = new MoveAnotherPlayerCardForwardBehaviour();
+            var playerId = Guid.NewGuid();
+            var card = Create.Card.WhichBlocked().Build();
+            var board = Create.Board.WithCards(card).Build();
+
+
+            Assert.False(moveAnotherPlayerCardForwardBehaviour.CanApply(playerId, board, CoinSide.Tails));
+
+        }
+
 
     }
 }
