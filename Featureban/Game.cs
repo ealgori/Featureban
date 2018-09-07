@@ -1,22 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using Featureban.Domain.Enums;
 using Featureban.Domain.Interfaces;
 
+[assembly: InternalsVisibleTo("Featureban.Tests")]
 namespace Featureban.Domain
 {
+    
     public class Game
     {
+        private readonly int _moveLimit;
         public List<Player> Players { get; }
         public Board Board { get; private set; }
         public ICoin Coin { get; }
         public Guid Id { get;}
-        public Game(Guid id, List<Player> players, ICoin coin, Board board)
+        public int MovesDone { get; private set; } = 0;
+
+        public Game(Guid id, List<Player> players, ICoin coin, Board board, int moveLimit)
         {
             if(players==null || !players.Any())
                 throw new ArgumentException("No one player in game");
+            if(moveLimit==0)
+                throw new ArgumentException("Game without move limits");
+            _moveLimit = moveLimit;
 
             Players = players;
             Board = board ?? throw new ArgumentException("No board in game");
@@ -31,11 +40,11 @@ namespace Featureban.Domain
             
             
         }
-        public Game(List<Player> players, ICoin coin, Board board) : this(Guid.NewGuid(), players, coin, board)
+        public Game(List<Player> players, ICoin coin, Board board, int moveLimit) : this(Guid.NewGuid(), players, coin, board, moveLimit)
         {
         }
 
-        public void AssignCardToPlayer(Player player)
+        internal void AssignCardToPlayer(Player player)
         {
 
             if (Board.HasSlotsFor(CardState.InProgress))
@@ -48,13 +57,21 @@ namespace Featureban.Domain
             }
         }
 
-        public void PlayerIterate(Player player)
+        internal void PlayerIterate(Player player)
         {
             var coinSide = player.DropCoin(Coin);
             var newBoard = player.Play(coinSide, Board);
             UpdateBoard(newBoard);
         }
 
+
+        public void Play()
+        {
+            foreach (var player in Players)
+            {
+                PlayerIterate(player);
+            }
+        }
 
         private void UpdateBoard(Board newBoard)
         {
