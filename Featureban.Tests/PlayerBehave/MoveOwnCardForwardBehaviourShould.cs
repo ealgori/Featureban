@@ -51,5 +51,8 @@ namespace Featureban.Tests.PlayerBehave
             Assert.False(moveOwnCardBehaviour.CanApply(playerId, board, CoinSide.Tails));
 
         }
+
+
+       
     }
 }
