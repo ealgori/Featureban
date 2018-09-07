@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Featureban.Domain
@@ -11,6 +12,14 @@ namespace Featureban.Domain
         public Board(IEnumerable<Card> cards)
         {
             Cards = cards;
+        }
+
+        public Board ReplaceCard(Card card, Card newCard)
+        {
+            var cards = Cards.ToList();
+            cards.Remove(card);
+            cards.Add(newCard);
+            return new Board(cards);
         }
     }
 }

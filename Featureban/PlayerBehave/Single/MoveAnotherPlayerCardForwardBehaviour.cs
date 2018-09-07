@@ -24,10 +24,7 @@ namespace Featureban.Domain.PlayerBehave.Single
             var card = board.Cards.First(c => _selector(c, player));
             var newCard = card.MoveForward();
 
-            var cards = board.Cards.ToList();
-            cards.Remove(card);
-            cards.Add(newCard);
-            return new Board(cards);
+            return board.ReplaceCard(card,newCard);
         }
     }
 }
