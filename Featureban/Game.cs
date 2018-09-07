@@ -41,11 +41,21 @@ namespace Featureban.Domain
             {
                 new Card(player, CardState.InProgress)
             };
-            this.Board = new Board(cardsList);
+            UpdateBoard(new Board(cardsList));
+        }
+
+        public void PlayerIterate(Player player)
+        {
+            var coinSide = player.DropCoin(Coin);
+            var newBoard = player.Play(coinSide, Board);
+            UpdateBoard(newBoard);
         }
 
 
-
+        private void UpdateBoard(Board newBoard)
+        {
+            Board = newBoard;
+        }
 
     }
 }

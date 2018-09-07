@@ -21,5 +21,20 @@ namespace Featureban.Domain
         }
 
 
+        public Board Play(CoinSide coinSide, Board board)
+        {
+            var newBoard = board;
+            if (coinSide == CoinSide.Tails)
+            {
+                var cardsList = new List<Card>(board.Cards)
+                {
+                    new Card(this, CardState.InProgress)
+                };
+
+                newBoard =  new Board(cardsList);
+            }
+
+            return newBoard;
+        }
     }
 }
