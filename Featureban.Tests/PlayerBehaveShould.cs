@@ -38,6 +38,18 @@ namespace Featureban.Tests
 
         }
 
+        [Fact]
+        public void NotUnblockOwnBlockedCard_IfDropTailsAndNoBlockedCards()
+        {
+            var unblockCardBehaviour = new UnblockOwnCardBahaviour();
+            var playerId = Guid.NewGuid();
+            var card = Create.Card.OwnedTo(playerId).Build();
+            var board = Create.Board.WithCards(card).Build();
+
+            Assert.False(unblockCardBehaviour.CanApply(playerId, board, CoinSide.Tails));
+
+        }
+
 
 
     }
