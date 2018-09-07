@@ -52,6 +52,21 @@ namespace Featureban.Tests.PlayerBehave
 
         }
 
+        [Fact]
+        public void NotAllowsMoveAnotherPlayerUnblockedCard_IfDropTailsAndWipLimitExceed()
+        {
+            var moveAnotherPlayerCardForwardBehaviour = new MoveAnotherPlayerCardForwardBehaviour();
+            var playerId = Guid.NewGuid();
+            var card = Create.Card.InProgressState().Build();
+            var card2 = Create.Card.InTestingState().WhichBlocked().Build();
+            var wipLimit = Create.WipLimit.WithLimit(1).Build();
+            var board = Create.Board.WithCards(card,card2).WithWipLimit(wipLimit).Build();
+
+
+            Assert.False(moveAnotherPlayerCardForwardBehaviour.CanApply(playerId, board, CoinSide.Tails));
+
+        }
+
 
     }
 }
