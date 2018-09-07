@@ -29,7 +29,7 @@ namespace Featureban.Tests
         }
 
         [Fact]
-        public void CanMoveAnotherCardToProgress_IfCoinDropTails()
+        public void CanGetAdditionalCard_IfCoinDropTails()
         {
             var player = Create.Player.WithGetNewCardBehaviour().Build();
             var game = Create.Game
