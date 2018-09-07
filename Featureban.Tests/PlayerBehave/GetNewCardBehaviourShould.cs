@@ -40,5 +40,19 @@ namespace Featureban.Tests.PlayerBehave
         }
 
 
+        [Fact]
+        public void NotAllowGetNewCard_IfWipLimitExceedAndCoinDropTails()
+        {
+            var getNewCardBehaviour = new GetNewCardBahaviour();
+            var wipLimit = Create.WipLimit.WithLimit(1).Build();
+            var playerId = Guid.NewGuid();
+            var card = Create.Card.OwnedTo(playerId).InProgressState().Build();
+            var board = Create.Board.WithCards(card).WithWipLimit(wipLimit).Build();
+
+
+            Assert.False(getNewCardBehaviour.CanApply(playerId, board, CoinSide.Tails));
+        }
+
+
     }
 }
