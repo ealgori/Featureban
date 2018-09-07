@@ -26,6 +26,19 @@ namespace Featureban.Tests.PlayerBehave
             Assert.NotEqual(playerId, newBoard.Cards.Single().PlayerId);
         }
 
-       
+        [Fact]
+        public void NotAllowsMoveAnotherPlayerUnblockedCard_IfDropEagle()
+        {
+            var moveAnotherPlayerCardForwardBehaviour = new MoveAnotherPlayerCardForwardBehaviour();
+            var playerId = Guid.NewGuid();
+            var card = Create.Card.Build();
+            var board = Create.Board.WithCards(card).Build();
+
+
+            Assert.False(moveAnotherPlayerCardForwardBehaviour.CanApply(playerId, board, CoinSide.Eagle));
+           
+        }
+
+
     }
 }
