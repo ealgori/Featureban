@@ -63,7 +63,25 @@ namespace Featureban.Tests
             Assert.True(game.Board.Cards.Single().State == CardState.InTesting);
         }
 
-       
+        [Fact]
+        public void CanMoveAnotherPlayerCardForward_IfCoinDropTails()
+        {
+            var player = Create.Player.WithMoveAnotherPlayerCardForwardBehaviour().Build();
+            var card = Create.Card.Build();
+            var board = Create.Board.WithCards(card).Build();
+            var game = Create.Game
+                .WithTwoTailsCoin()
+                .WithBoard(board)
+                .WithPlayers(new List<Player> { player })
+                .Build();
+
+            game.PlayerIterate(player);
+
+            Assert.True(game.Board.Cards.Single().Owner.Id != player.Id);
+            Assert.True(game.Board.Cards.Single().State == CardState.InTesting);
+        }
+
+
 
 
 
