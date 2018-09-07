@@ -27,7 +27,7 @@ namespace Featureban.Tests.PlayerBehave
         }
 
         [Fact]
-        public void NotAllowdMoveOwnUnblockedCard_IfDropEagle()
+        public void NotAllowMoveOwnUnblockedCard_IfDropEagle()
         {
             var moveOwnCardBehaviour = new MoveOwnCardForwardBehaviour();
             var playerId = Guid.NewGuid();
@@ -41,7 +41,7 @@ namespace Featureban.Tests.PlayerBehave
         }
 
         [Fact]
-        public void NotAllowdMoveOwnUnblockedCard_IfDropTailsAndNoOwnUnblockdCards()
+        public void NotAllowMoveOwnUnblockedCard_IfDropTailsAndNoOwnUnblockdCards()
         {
             var moveOwnCardBehaviour = new MoveOwnCardForwardBehaviour();
             var playerId = Guid.NewGuid();
@@ -53,7 +53,7 @@ namespace Featureban.Tests.PlayerBehave
         }
 
         [Fact]
-        public void NotAllowdMoveOwnUnblockedCard_IfDropTailsAndWipLimitExceed()
+        public void NotAllowMoveOwnUnblockedCard_IfDropTailsAndWipLimitExceed()
         {
             var moveOwnCardBehaviour = new MoveOwnCardForwardBehaviour();
             var playerId = Guid.NewGuid();
