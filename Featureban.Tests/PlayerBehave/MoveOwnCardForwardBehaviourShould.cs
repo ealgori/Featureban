@@ -52,7 +52,22 @@ namespace Featureban.Tests.PlayerBehave
 
         }
 
+        [Fact]
+        public void NotAllowdMoveOwnUnblockedCard_IfDropTailsAndWipLimitExceed()
+        {
+            var moveOwnCardBehaviour = new MoveOwnCardForwardBehaviour();
+            var playerId = Guid.NewGuid();
+            var card = Create.Card.OwnedTo(playerId).InProgressState().Build();
+            var card2= Create.Card.OwnedTo(playerId).InTestingState().WhichBlocked().Build();
+            var wipLimit = Create.WipLimit.WithLimit(1).Build();
+            var board = Create.Board.WithCards(card,card2).WithWipLimit(wipLimit).Build();
 
-       
+
+            Assert.False(moveOwnCardBehaviour.CanApply(playerId, board, CoinSide.Tails));
+
+        }
+
+
+
     }
 }
