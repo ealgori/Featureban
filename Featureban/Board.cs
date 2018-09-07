@@ -21,5 +21,24 @@ namespace Featureban.Domain
             cards.Add(newCard);
             return new Board(cards);
         }
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as Board);
+        }
+
+        public bool Equals(Board obj)
+        {
+            return
+                obj != null
+                &&(obj.Cards.Count() == Cards.Count()) 
+                && !obj.Cards.Except(Cards).Any();
+        }
+
+        public override int GetHashCode()
+        {
+            return Cards.GetHashCode();
+        }
+
     }
 }
