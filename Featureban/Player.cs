@@ -3,15 +3,18 @@ using System.Collections.Generic;
 using System.Text;
 using Featureban.Domain.Enums;
 using Featureban.Domain.Interfaces;
+using Featureban.Domain.PlayerBehave.Interface;
 
 namespace Featureban.Domain
 {
     public class Player
     {
+        private readonly IPlayerBehaviour _behaviour;
         public Guid Id { get; }
 
-        public Player()
+        public Player(IPlayerBehaviour behaviour)
         {
+            _behaviour = behaviour;
             Id = Guid.NewGuid();
         }
 
@@ -23,18 +26,10 @@ namespace Featureban.Domain
 
         public Board Play(CoinSide coinSide, Board board)
         {
-            var newBoard = board;
-            if (coinSide == CoinSide.Tails)
-            {
-                var cardsList = new List<Card>(board.Cards)
-                {
-                    new Card(this, CardState.InProgress)
-                };
+            if (_behaviour.CanApply(this, board, coinSide))
+                return _behaviour.Apply(this, board);
+            return board;
 
-                newBoard =  new Board(cardsList);
-            }
-
-            return newBoard;
         }
     }
 }

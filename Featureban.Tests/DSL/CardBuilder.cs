@@ -8,7 +8,7 @@ namespace Featureban.Tests.DSL
 {
     public class CardBuilder
     {
-        private Player _player  = new Player();
+        private Player _player  = Create.Player.Build();
         private CardState _cardState = CardState.InProgress;
         private bool _blocked;
 
@@ -27,6 +27,12 @@ namespace Featureban.Tests.DSL
         public CardBuilder InCompletedState()
         {
             _cardState = CardState.Completed;
+            return this;
+        }
+
+        public CardBuilder OwnedTo(Player player)
+        {
+            _player = player;
             return this;
         }
         public Card Build()

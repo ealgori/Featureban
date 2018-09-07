@@ -31,7 +31,7 @@ namespace Featureban.Tests
         [Fact]
         public void CanMoveAnotherCardToProgress_IfCoinDropTails()
         {
-            var player = Create.Player.Build();
+            var player = Create.Player.WithGetNewCardBehaviour().Build();
             var game = Create.Game
                 .WithTwoTailsCoin()
                 .WithPlayers(new List<Player> { player })
@@ -42,10 +42,32 @@ namespace Featureban.Tests
 
             Assert.Equal(2,game.Board.Cards.Count());
             Assert.True(game.Board.Cards.All(c=>c.Owner.Id==player.Id));
+        }
 
 
+        [Fact]
+        public void CanMoveOwnCardForward_IfCoinDropTails()
+        {
+            var player = Create.Player.WithMoveOwnCardForwardBehaviour().Build();
+            var card = Create.Card.OwnedTo(player).Build();
+            var board = Create.Board.WithCards(card).Build();
+            var game = Create.Game
+                .WithTwoTailsCoin()
+                .WithBoard(board)
+                .WithPlayers(new List<Player> { player })
+                .Build();
+
+            game.PlayerIterate(player);
+
+            Assert.True(game.Board.Cards.Single().Owner.Id == player.Id);
+            Assert.True(game.Board.Cards.Single().State == CardState.InTesting);
         }
 
        
+
+
+
+
+
     }
 }
