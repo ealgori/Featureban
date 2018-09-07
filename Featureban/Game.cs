@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Xml;
 using Featureban.Domain.Enums;
 using Featureban.Domain.Interfaces;
 
@@ -62,14 +63,21 @@ namespace Featureban.Domain
             var coinSide = player.DropCoin(Coin);
             var newBoard = player.Play(coinSide, Board);
             UpdateBoard(newBoard);
+            MovesDone++;
         }
 
 
         public void Play()
         {
-            foreach (var player in Players)
+            while (MovesDone < _moveLimit)
             {
-                PlayerIterate(player);
+                foreach (var player in Players)
+                {
+                    PlayerIterate(player);
+                    
+                    if (MovesDone >= _moveLimit)
+                        break;
+                }
             }
         }
 

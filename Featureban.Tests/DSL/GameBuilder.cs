@@ -12,6 +12,7 @@ namespace Featureban.Tests.DSL
         private ICoin coin = Create.Coin.WhichAlwaysDropOn(CoinSide.Tails).Build();
         private List<Player> players;
         private Board board = Create.Board.Build();
+        private int _movesLimit = 1;
         
         public GameBuilder WithTwoEagleCoin()
         {
@@ -22,6 +23,12 @@ namespace Featureban.Tests.DSL
         public GameBuilder WithTwoTailsCoin()
         {
             this.coin = Create.Coin.WhichAlwaysDropOn(CoinSide.Tails).Build();
+            return this;
+        }
+
+        public GameBuilder WithMovesLimit(int movesLimit)
+        {
+            this._movesLimit = movesLimit;
             return this;
         }
 
@@ -39,7 +46,7 @@ namespace Featureban.Tests.DSL
 
         public Game Build()
         {
-            return new Game(players,coin,board,1); 
+            return new Game(players,coin,board,_movesLimit); 
         }
 
     }
