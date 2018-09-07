@@ -14,7 +14,7 @@ namespace Featureban.Tests.PlayerBehave
         [Fact]
         public void UnblockAnotherPlayerBlockedCard_IfDropTails()
         {
-            var unblockAnotherPlayerCardBehaviour = new UnblockAnotherPlayerCardBehaviour();;
+            var unblockAnotherPlayerCardBehaviour = new UnblockAnotherPlayerCardBehaviour();
             var playerId = Guid.NewGuid();
             var card = Create.Card.WhichBlocked().Build();
             var board = Create.Board.WithCards(card).Build();
@@ -24,6 +24,30 @@ namespace Featureban.Tests.PlayerBehave
             Assert.True(unblockAnotherPlayerCardBehaviour.CanApply(playerId, board, CoinSide.Tails));
             Assert.False(newBoard.Cards.Single().IsBlocked);
             Assert.NotEqual(playerId, newBoard.Cards.Single().PlayerId);
+        }
+
+        [Fact]
+        public void NotAllowUnblockAnotherPlayerBlockedCard_IfDropEagle()
+        {
+            var unblockAnotherPlayerCardBehaviour = new UnblockAnotherPlayerCardBehaviour();
+            var playerId = Guid.NewGuid();
+            var card = Create.Card.WhichBlocked().Build();
+            var board = Create.Board.WithCards(card).Build();
+
+            Assert.False(unblockAnotherPlayerCardBehaviour.CanApply(playerId, board, CoinSide.Eagle));
+
+        }
+
+        [Fact]
+        public void NotAllowUnblockAnotherPlayerBlockedCard_IfDropTailsAndNoBlockedCards()
+        {
+            var unblockAnotherPlayerCardBehaviour = new UnblockAnotherPlayerCardBehaviour(); ;
+            var playerId = Guid.NewGuid();
+            var card = Create.Card.Build();
+            var board = Create.Board.WithCards(card).Build();
+
+            Assert.False(unblockAnotherPlayerCardBehaviour.CanApply(playerId, board, CoinSide.Tails));
+
         }
     }
 }
