@@ -30,8 +30,8 @@ namespace Featureban.Domain
 
         public bool CanMoveForward()
         {
-            var nextState = State + 1;
-            return true;
+            return Enum.IsDefined(typeof(CardState),State + 1);
+           
         }
 
         public Card Block()

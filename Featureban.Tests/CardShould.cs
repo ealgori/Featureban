@@ -37,5 +37,14 @@ namespace Featureban.Tests
             Assert.Equal(CardState.InTesting, changedCard.State);
         }
 
+        [Fact]
+        public void ThrowExceprion_OnMoveFowardIfItCant()
+        {
+            var card = Create.Card.InCompletedState().Build();
+
+            Assert.False(card.CanMoveForward());
+            Assert.Throws<InvalidOperationException>(()=>card.MoveForward());
+        }
+
     }
 }
