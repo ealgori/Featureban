@@ -35,5 +35,15 @@ namespace Featureban.Tests.PlayerBehave
             Assert.False(blockOwnAndGetNewBehave.CanApply(playerId, board, CoinSide.Tails));
         }
 
+        public void NotAllowedBlockOwnUnBlockedCardAndGetNewCard_IfDropEagleAndNoUnblockedCard()
+        {
+            var blockOwnAndGetNewBehave = new BlockOwnCardBahaviour();
+            var playerId = Guid.NewGuid();
+            var card = Create.Card.WhichBlocked().OwnedTo(playerId).Build();
+            var board = Create.Board.WithCards(card).Build();
+
+            Assert.False(blockOwnAndGetNewBehave.CanApply(playerId, board, CoinSide.Eagle));
+        }
+
     }
 }
