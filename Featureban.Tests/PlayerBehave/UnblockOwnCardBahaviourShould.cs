@@ -20,7 +20,7 @@ namespace Featureban.Tests.PlayerBehave
             var card = Create.Card.WhichBlocked().OwnedTo(playerId).Build();
             var board = Create.Board.WithCards(card).Build();
 
-            var newBoard = unblockCardBehaviour.Apply(playerId, board);
+            var newBoard = unblockCardBehaviour.Apply(playerId, board,CoinSide.Tails);
 
             Assert.True(unblockCardBehaviour.CanApply(playerId,board,CoinSide.Tails));
             Assert.False(newBoard.Cards.Single().IsBlocked);

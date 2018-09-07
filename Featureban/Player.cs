@@ -27,7 +27,7 @@ namespace Featureban.Domain
         public Board Play(CoinSide coinSide, Board board)
         {
             if (_behaviour.CanApply(Id, board, coinSide))
-                return _behaviour.Apply(Id, board);
+                return _behaviour.Apply(Id, board, coinSide);
             return board;
 
         }

@@ -19,7 +19,7 @@ namespace Featureban.Tests.PlayerBehave
             var card = Create.Card.Build();
             var board = Create.Board.WithCards(card).Build();
 
-            var newBoard = moveAnotherPlayerCardForwardBehaviour.Apply(playerId, board);
+            var newBoard = moveAnotherPlayerCardForwardBehaviour.Apply(playerId, board,CoinSide.Tails);
 
             Assert.True(moveAnotherPlayerCardForwardBehaviour.CanApply(playerId, board, CoinSide.Tails));
             Assert.Equal(CardState.InTesting, newBoard.Cards.Single().State);

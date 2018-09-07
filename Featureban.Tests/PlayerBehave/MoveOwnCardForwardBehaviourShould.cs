@@ -19,7 +19,7 @@ namespace Featureban.Tests.PlayerBehave
             var card = Create.Card.OwnedTo(playerId).Build();
             var board = Create.Board.WithCards(card).Build();
 
-            var newBoard = moveOwnCardBehaviour.Apply(playerId, board);
+            var newBoard = moveOwnCardBehaviour.Apply(playerId, board,CoinSide.Tails);
 
             Assert.True(moveOwnCardBehaviour.CanApply(playerId, board, CoinSide.Tails));
             Assert.Equal(CardState.InTesting, newBoard.Cards.Single().State);
@@ -34,7 +34,7 @@ namespace Featureban.Tests.PlayerBehave
             var card = Create.Card.OwnedTo(playerId).Build();
             var board = Create.Board.WithCards(card).Build();
 
-            var newBoard = moveOwnCardBehaviour.Apply(playerId, board);
+            var newBoard = moveOwnCardBehaviour.Apply(playerId, board,CoinSide.Eagle);
 
             Assert.False(moveOwnCardBehaviour.CanApply(playerId, board, CoinSide.Eagle));
          

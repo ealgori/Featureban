@@ -17,7 +17,7 @@ namespace Featureban.Tests.PlayerBehave
             var card = Create.Card.OwnedTo(playerId).Build();
             var board = Create.Board.WithCards(card).Build();
 
-            var newBoard = getNewCardBehaviour.Apply(playerId, board);
+            var newBoard = getNewCardBehaviour.Apply(playerId, board,CoinSide.Eagle);
 
             Assert.True(getNewCardBehaviour.CanApply(playerId, board, CoinSide.Eagle));
             Assert.Equal(2, newBoard.Cards.Count());
@@ -32,7 +32,7 @@ namespace Featureban.Tests.PlayerBehave
             var card = Create.Card.OwnedTo(playerId).Build();
             var board = Create.Board.WithCards(card).Build();
 
-            var newBoard = getNewCardBehaviour.Apply(playerId, board);
+            var newBoard = getNewCardBehaviour.Apply(playerId, board,CoinSide.Tails);
 
             Assert.True(getNewCardBehaviour.CanApply(playerId, board, CoinSide.Tails));
             Assert.Equal(2, newBoard.Cards.Count());

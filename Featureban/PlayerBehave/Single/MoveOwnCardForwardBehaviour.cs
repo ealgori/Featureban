@@ -19,7 +19,7 @@ namespace Featureban.Domain.PlayerBehave.Single
                
         }
 
-        public Board Apply(Guid playerId, Board board)
+        public Board Apply(Guid playerId, Board board, CoinSide coinSide)
         {
             var card = board.Cards.First(c=>_selector(c,playerId));
             var newCard = card.MoveForward();

@@ -12,7 +12,7 @@ namespace Featureban.Domain.PlayerBehave.Single
         public bool CanApply(Guid playerId, Board board, CoinSide coinSide) => true;
        
 
-        public Board Apply(Guid playerId, Board board)
+        public Board Apply(Guid playerId, Board board, CoinSide coinSide)
         {
             var cardsList = new List<Card>(board.Cards)
             {

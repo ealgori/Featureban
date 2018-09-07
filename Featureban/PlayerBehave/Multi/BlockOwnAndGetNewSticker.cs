@@ -22,10 +22,10 @@ namespace Featureban.Domain.PlayerBehave.Multi
                    && getNewCardBehaviour.CanApply(playerId, board, coinSide);
         }
 
-        public Board Apply(Guid playerId, Board board)
+        public Board Apply(Guid playerId, Board board, CoinSide coinSide)
         {
-            var newBoard = blockOwnBehaviour.Apply(playerId, board);
-            var newBoard2 = getNewCardBehaviour.Apply(playerId, board);
+            var newBoard = blockOwnBehaviour.Apply(playerId, board,coinSide);
+            var newBoard2 = getNewCardBehaviour.Apply(playerId, board,coinSide);
             return newBoard2;
         }
     }
