@@ -9,7 +9,7 @@ namespace Featureban.Tests.DSL
 {
     public class GameBuilder
     {
-        private ICoin coin;
+        private ICoin coin = Create.Coin.WhichAlwaysDropOn(CoinSide.Tails).Build();
         private List<Player> players;
         private Board board = Create.Board.Build();
         public GameBuilder WithTwoEagleCoin()

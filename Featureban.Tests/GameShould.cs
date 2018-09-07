@@ -70,5 +70,31 @@ namespace Featureban.Tests
 
 
         }
+
+        [Fact]
+        public void AllowPlayerGetCardNotMoreThanWipLimit_BeforeGameStarts()
+        {
+            var playerList = new List<Player>
+            {
+                Create.Player.Build(),
+                Create.Player.Build()
+            };
+            var wipLimit = Create.WipLimit.WithLimit(1).Build();
+            var board = Create.Board.WithWipLimit(wipLimit).Build();
+
+            var game = Create.Game
+                .WithBoard(board)
+                .WithPlayers(playerList).Build();
+
+            Assert.Single(game.Board.Cards, 
+                card=> playerList.Any(
+                    player=> player.Id == card.PlayerId
+                )
+            );
+            
+
+
+
+        }
     }
 }

@@ -37,11 +37,15 @@ namespace Featureban.Domain
 
         public void AssignCardToPlayer(Player player)
         {
-            var cardsList = new List<Card>(this.Board.Cards)
+
+            if (Board.HasSlotsFor(CardState.InProgress))
             {
-                new Card(player.Id, CardState.InProgress)
-            };
-            UpdateBoard(new Board(cardsList, Board.WipLimit));
+                var cardsList = new List<Card>(this.Board.Cards)
+                {
+                    new Card(player.Id, CardState.InProgress)
+                };
+                UpdateBoard(new Board(cardsList, Board.WipLimit));
+            }
         }
 
         public void PlayerIterate(Player player)
