@@ -31,9 +31,9 @@ namespace Featureban.Tests
         {
             var card = Create.Card.Build();
 
-            var changedCard = card.ChangeStatus(CardState.InProgress);
+            var changedCard = card.MoveForward();
 
-            Assert.Equal(CardState.InProgress, changedCard.State);
+            Assert.Equal(CardState.InTesting, changedCard.State);
         }
 
     }

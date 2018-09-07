@@ -18,9 +18,20 @@ namespace Featureban.Domain
             this.Owner = owner;
         }
 
-        public Card ChangeStatus(CardState newStatus)
+        public Card MoveForward()
         {
-            return new Card(this.Owner, newStatus, true);
+            if (!CanMoveForward())
+            {
+                throw new InvalidOperationException($"Cannot move card with state '{State}' forward");
+            }
+            var nextState = State + 1;
+            return new Card(Owner,nextState);
+        }
+
+        public bool CanMoveForward()
+        {
+            var nextState = State + 1;
+            return true;
         }
 
         public Card Block()

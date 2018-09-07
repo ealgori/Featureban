@@ -17,6 +17,18 @@ namespace Featureban.Tests.DSL
             _blocked = true;
             return this;
         }
+
+        public CardBuilder InTestingState()
+        {
+            _cardState = CardState.InTesting;
+            return this;
+        }
+
+        public CardBuilder InCompletedState()
+        {
+            _cardState = CardState.Completed;
+            return this;
+        }
         public Card Build()
         {
             return new Card(_player,_cardState, _blocked);
