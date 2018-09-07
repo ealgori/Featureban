@@ -44,7 +44,7 @@ namespace Featureban.Tests
                 .WithTwoEagleCoin()
                 .WithPlayers(playerList).Build();
 
-            Assert.Equal(game.Board.Cards.First().Owner.Id, game.Players[0].Id);
+            Assert.Equal(game.Board.Cards.First().PlayerId, game.Players[0].Id);
             
 
 

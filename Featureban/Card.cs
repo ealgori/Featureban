@@ -9,13 +9,13 @@ namespace Featureban.Domain
     {
         public CardState State { get;}
         public bool IsBlocked { get;}
-        public Player Owner { get;}
+        public Guid PlayerId { get;}
 
-        public Card(Player owner, CardState state, bool isBlocked = false)
+        public Card(Guid playerId, CardState state, bool isBlocked = false)
         {
             this.State = state;
             this.IsBlocked = isBlocked;
-            this.Owner = owner;
+            this.PlayerId = playerId;
         }
 
         public Card MoveForward()
@@ -25,7 +25,7 @@ namespace Featureban.Domain
                 throw new InvalidOperationException($"Cannot move card with state '{State}' forward");
             }
             var nextState = State + 1;
-            return new Card(Owner,nextState);
+            return new Card(PlayerId,nextState);
         }
 
         public bool CanMoveForward()
@@ -38,7 +38,7 @@ namespace Featureban.Domain
         {
             if(IsBlocked)
                 throw new NotSupportedException("Card is already blocked");
-            return new Card(this.Owner, this.State, true);
+            return new Card(this.PlayerId, this.State, true);
 
         }
 
@@ -46,7 +46,7 @@ namespace Featureban.Domain
         {
             if(!IsBlocked)
                 throw new NotSupportedException("Card is not blocked");
-            return new Card(this.Owner, this.State, false);
+            return new Card(this.PlayerId, this.State, false);
         }
     }
 }

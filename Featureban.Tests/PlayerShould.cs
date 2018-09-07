@@ -41,7 +41,7 @@ namespace Featureban.Tests
 
 
             Assert.Equal(2,game.Board.Cards.Count());
-            Assert.True(game.Board.Cards.All(c=>c.Owner.Id==player.Id));
+            Assert.True(game.Board.Cards.All(c=>c.PlayerId==player.Id));
         }
 
 
@@ -49,7 +49,7 @@ namespace Featureban.Tests
         public void CanMoveOwnCardForward_IfCoinDropTails()
         {
             var player = Create.Player.WithMoveOwnCardForwardBehaviour().Build();
-            var card = Create.Card.OwnedTo(player).Build();
+            var card = Create.Card.OwnedTo(player.Id).Build();
             var board = Create.Board.WithCards(card).Build();
             var game = Create.Game
                 .WithTwoTailsCoin()
@@ -59,7 +59,7 @@ namespace Featureban.Tests
 
             game.PlayerIterate(player);
 
-            Assert.True(game.Board.Cards.Single().Owner.Id == player.Id);
+            Assert.True(game.Board.Cards.Single().PlayerId == player.Id);
             Assert.True(game.Board.Cards.Single().State == CardState.InTesting);
         }
 
@@ -77,7 +77,7 @@ namespace Featureban.Tests
 
             game.PlayerIterate(player);
 
-            Assert.True(game.Board.Cards.Single().Owner.Id != player.Id);
+            Assert.True(game.Board.Cards.Single().PlayerId != player.Id);
             Assert.True(game.Board.Cards.Single().State == CardState.InTesting);
         }
 

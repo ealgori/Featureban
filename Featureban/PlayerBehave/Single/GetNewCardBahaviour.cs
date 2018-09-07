@@ -9,14 +9,14 @@ namespace Featureban.Domain.PlayerBehave.Single
 {
     public class GetNewCardBahaviour:IPlayerBehaviour
     {
-        public bool CanApply(Player player, Board board, CoinSide coinSide) => coinSide == CoinSide.Tails;
+        public bool CanApply(Guid playerId, Board board, CoinSide coinSide) => coinSide == CoinSide.Tails;
        
 
-        public Board Apply(Player player, Board board)
+        public Board Apply(Guid playerId, Board board)
         {
             var cardsList = new List<Card>(board.Cards)
             {
-                new Card(player, CardState.InProgress)
+                new Card(playerId, CardState.InProgress)
             };
 
             return new Board(cardsList);

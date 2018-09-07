@@ -7,24 +7,23 @@ using Featureban.Domain.PlayerBehave.Interface;
 
 namespace Featureban.Domain.PlayerBehave.Single
 {
-    public class MoveAnotherPlayerCardForwardBehaviour:IPlayerBehaviour
+    public class UnblockOwnCardBahaviour : IPlayerBehaviour
     {
-        private readonly Func<Card, Guid, bool> _selector = ((c, id) =>
-            !c.IsBlocked
-            && c.CanMoveForward()
-            && c.PlayerId != id);
+        private readonly Func<Card, Guid, bool> _selector = ((c, id) => 
+            c.IsBlocked 
+            && c.PlayerId == id);
         public bool CanApply(Guid playerId, Board board, CoinSide coinSide)
         {
             return coinSide == CoinSide.Tails && board.Cards.Any(c => _selector(c, playerId));
-
+               
         }
 
         public Board Apply(Guid playerId, Board board)
         {
-            var card = board.Cards.First(c => _selector(c, playerId));
-            var newCard = card.MoveForward();
+            var card = board.Cards.First(c=>_selector(c,playerId));
+            var newCard = card.Unblock();
 
-            return board.ReplaceCard(card,newCard);
+            return board.ReplaceCard(card, newCard);
         }
     }
 }

@@ -9,19 +9,19 @@ namespace Featureban.Domain.PlayerBehave.Single
 {
     public class MoveOwnCardForwardBehaviour:IPlayerBehaviour
     {
-        private readonly Func<Card, Player, bool> _selector = ((c, p) => 
+        private readonly Func<Card, Guid, bool> _selector = ((c, id) => 
             !c.IsBlocked 
             && c.CanMoveForward() 
-            && c.Owner.Id == p.Id);
-        public bool CanApply(Player player, Board board, CoinSide coinSide)
+            && c.PlayerId ==id);
+        public bool CanApply(Guid playerId, Board board, CoinSide coinSide)
         {
-            return coinSide == CoinSide.Tails && board.Cards.Any(c => _selector(c, player));
+            return coinSide == CoinSide.Tails && board.Cards.Any(c => _selector(c, playerId));
                
         }
 
-        public Board Apply(Player player, Board board)
+        public Board Apply(Guid playerId, Board board)
         {
-            var card = board.Cards.First(c=>_selector(c,player));
+            var card = board.Cards.First(c=>_selector(c,playerId));
             var newCard = card.MoveForward();
 
             return board.ReplaceCard(card, newCard);
