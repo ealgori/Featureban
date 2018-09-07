@@ -18,8 +18,7 @@ namespace Featureban.Domain.PlayerBehave.Single
             {
                 new Card(playerId, CardState.InProgress)
             };
-
-            return new Board(cardsList);
+            return new Board(cardsList, board.WipLimit);
         }
     }
 }

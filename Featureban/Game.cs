@@ -41,7 +41,7 @@ namespace Featureban.Domain
             {
                 new Card(player.Id, CardState.InProgress)
             };
-            UpdateBoard(new Board(cardsList));
+            UpdateBoard(new Board(cardsList, Board.WipLimit));
         }
 
         public void PlayerIterate(Player player)

@@ -18,6 +18,11 @@ namespace Featureban.Tests.DSL
             return this;
         }
 
+        public CardBuilder InProgressState()
+        {
+            _cardState = CardState.InProgress;
+            return this;
+        }
         public CardBuilder InTestingState()
         {
             _cardState = CardState.InTesting;
