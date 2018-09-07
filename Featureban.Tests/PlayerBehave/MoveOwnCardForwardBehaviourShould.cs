@@ -39,5 +39,17 @@ namespace Featureban.Tests.PlayerBehave
             Assert.False(moveOwnCardBehaviour.CanApply(playerId, board, CoinSide.Eagle));
          
         }
+
+        [Fact]
+        public void NotAllowdMoveOwnUnblockedCard_IfDropTailsAndNoOwnUnblockdCards()
+        {
+            var moveOwnCardBehaviour = new MoveOwnCardForwardBehaviour();
+            var playerId = Guid.NewGuid();
+            var card = Create.Card.WhichBlocked().OwnedTo(playerId).Build();
+            var board = Create.Board.WithCards(card).Build();
+
+            Assert.False(moveOwnCardBehaviour.CanApply(playerId, board, CoinSide.Tails));
+
+        }
     }
 }
