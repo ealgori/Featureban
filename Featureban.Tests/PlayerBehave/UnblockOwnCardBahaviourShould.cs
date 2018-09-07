@@ -7,10 +7,11 @@ using Featureban.Domain.PlayerBehave.Single;
 using Featureban.Tests.DSL;
 using Xunit;
 
-namespace Featureban.Tests
+namespace Featureban.Tests.PlayerBehave
 {
-    public class PlayerBehaveShould
+    public class UnblockOwnCardBahaviourShould
     {
+
         [Fact]
         public void UnblockOwnBlockedCard_IfDropTails()
         {
@@ -27,7 +28,7 @@ namespace Featureban.Tests
         }
 
         [Fact]
-        public void NotUnblockOwnBlockedCard_IfDropEagle()
+        public void NotAllowUnblockOwnBlockedCard_IfDropEagle()
         {
             var unblockCardBehaviour = new UnblockOwnCardBahaviour();
             var playerId = Guid.NewGuid();
@@ -39,7 +40,7 @@ namespace Featureban.Tests
         }
 
         [Fact]
-        public void NotUnblockOwnBlockedCard_IfDropTailsAndNoBlockedCards()
+        public void NotAllowUnblockOwnBlockedCard_IfDropTailsAndNoBlockedCards()
         {
             var unblockCardBehaviour = new UnblockOwnCardBahaviour();
             var playerId = Guid.NewGuid();
