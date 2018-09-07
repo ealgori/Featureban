@@ -27,7 +27,7 @@ namespace Featureban.Domain
 
         public bool HasSlotsFor(CardState state)
         {
-            if (WipLimit.Limits.ContainsKey(state))
+            if (!WipLimit.Limits.ContainsKey(state))
                 return true;
             var limit = WipLimit.Limits[state];
             if (limit == 0)
