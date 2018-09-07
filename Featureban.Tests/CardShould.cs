@@ -27,12 +27,13 @@ namespace Featureban.Tests
         }
 
         [Fact]
-        public void ChangeState_OnChangeState()
+        public void ChangeState_OnMoveFowardIfItCan()
         {
             var card = Create.Card.Build();
 
             var changedCard = card.MoveForward();
 
+            Assert.True(card.CanMoveForward());
             Assert.Equal(CardState.InTesting, changedCard.State);
         }
 
