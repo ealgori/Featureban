@@ -11,14 +11,16 @@ namespace Featureban.Domain.PlayerBehave.Full
 {
     public class PlayerBehaviour:IPlayerBehaviour
     {
-        private IEnumerable<IPlayerBehaviour> tailsBehaviours;
+        private IEnumerable<IPlayerBehaviour> _tailsBehaviours1Priority;
+        private IEnumerable<IPlayerBehaviour> _tailsBehaviours2Priority;
         private IEnumerable<IPlayerBehaviour> eagleBehaviours;
         private readonly IPlayerBehaviour skipMoveBehaviour = new SkipMoveBehave();
         private readonly Random rnd = new Random();
 
-        public PlayerBehaviour(IEnumerable<IPlayerBehaviour> tailsBehaviours, IEnumerable<IPlayerBehaviour> eagleBehaviours)
+        public PlayerBehaviour(IEnumerable<IPlayerBehaviour> tailsBehaviours1Priority, IEnumerable<IPlayerBehaviour> tailsBehaviours2Priority, IEnumerable<IPlayerBehaviour> eagleBehaviours)
         {
-            this.tailsBehaviours = tailsBehaviours;
+            this._tailsBehaviours1Priority = tailsBehaviours1Priority;
+            this._tailsBehaviours2Priority = tailsBehaviours2Priority;
             this.eagleBehaviours = eagleBehaviours;
         }
 
@@ -29,7 +31,10 @@ namespace Featureban.Domain.PlayerBehave.Full
         {
             if (coinSide == CoinSide.Tails)
             {
-                var satisfidedBehaves = tailsBehaviours.Where(b => b.CanApply(playerId, board, coinSide)).ToList();
+                var satisfidedBehaves = _tailsBehaviours1Priority.Where(b => b.CanApply(playerId, board, coinSide)).ToList();
+                if (!satisfidedBehaves.Any())
+                    satisfidedBehaves = _tailsBehaviours2Priority.Where(b => b.CanApply(playerId, board, coinSide)).ToList();
+
                 if (!satisfidedBehaves.Any())
                     return skipMoveBehaviour.Apply(playerId, board, coinSide);
                 var randombehave = satisfidedBehaves[rnd.Next(satisfidedBehaves.Count())];
