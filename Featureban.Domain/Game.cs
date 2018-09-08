@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Xml;
+using Featureban.Domain.Base;
 using Featureban.Domain.Enums;
 using Featureban.Domain.EventArguments;
 using Featureban.Domain.Interfaces;
@@ -12,20 +13,19 @@ using Featureban.Domain.Interfaces;
 namespace Featureban.Domain
 {
     
-    public class Game
+    public class Game:Entity<Guid>
     {
         private readonly int _stagesLimit;
         public List<Player> Players { get; }
         public Board Board { get; private set; }
         public ICoin Coin { get; }
-        public Guid Id { get;}
         public int StagesDone { get; private set; } = 0;
 
         public event EventHandler<BoardChangedEventArgs> OnBoardChanged;
 
 
 
-        public Game(Guid id, List<Player> players, ICoin coin, Board board, int stagesLimit)
+        public Game(Guid id, List<Player> players, ICoin coin, Board board, int stagesLimit):base(id)
         {
             if(players==null || !players.Any())
                 throw new ArgumentException("No one player in game");
@@ -42,8 +42,6 @@ namespace Featureban.Domain
                 {
                     AssignCardToPlayer(player);
                 }
-            Id = Guid.NewGuid();
-            
             
         }
         public Game(List<Player> players, ICoin coin, Board board, int moveLimit) : this(Guid.NewGuid(), players, coin, board, moveLimit)
