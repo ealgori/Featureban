@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2035
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Featureban.Domain", "Featureban\Featureban.Domain.csproj", "{C1BEE4CC-B01C-4BB4-BB6E-B1FB0D24572A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Featureban.Domain", "Featureban.Domain\Featureban.Domain.csproj", "{C1BEE4CC-B01C-4BB4-BB6E-B1FB0D24572A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Featureban.Tests", "Featureban.Tests\Featureban.Tests.csproj", "{CCA63144-D0D5-4276-A7C1-AC07EAADD128}"
 EndProject

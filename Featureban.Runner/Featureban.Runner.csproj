@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Featureban\Featureban.Domain.csproj" />
+    <ProjectReference Include="..\Featureban.Domain\Featureban.Domain.csproj" />
   </ItemGroup>
 
 </Project>
