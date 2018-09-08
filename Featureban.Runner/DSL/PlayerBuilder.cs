@@ -4,6 +4,7 @@ using System.Text;
 using Featureban.Domain;
 using Featureban.Domain.PlayerBehave.Full;
 using Featureban.Domain.PlayerBehave.Interface;
+using Featureban.Domain.PlayerBehave.Model;
 using Featureban.Domain.PlayerBehave.Multi;
 using Featureban.Domain.PlayerBehave.Single;
 
@@ -15,28 +16,25 @@ namespace Featureban.Runner.DSL
        
         public PlayerBuilder()
         {
-            var tailsBehaviours1Priority = new List<IPlayerBehaviour>
+            var tailsBehaviour = new List<PlayerBehaviourContainer>
             {
-                new GetNewCardBahaviour(),
-                new MoveOwnCardForwardBehaviour(),
-                new UnblockOwnCardBahaviour()
+                new PlayerBehaviourContainer(1,new MoveOwnCardForwardBehaviour()),
+                new PlayerBehaviourContainer(2,new GetNewCardBahaviour()),
+                new PlayerBehaviourContainer(2,new UnblockOwnCardBahaviour()),
+                new PlayerBehaviourContainer(3,new MoveAnotherPlayerCardForwardBehaviour()),
+                new PlayerBehaviourContainer(4,new UnblockAnotherPlayerCardBehaviour()),
+            };
+
+       
+
+
+            var eagleBehaviours = new List<PlayerBehaviourContainer>
+            {
+                new PlayerBehaviourContainer(1,new BlockOwnAndGetNewSticker())
 
             };
 
-            var tailsBehaviours2Priority = new List<IPlayerBehaviour>
-            {
-                new MoveAnotherPlayerCardForwardBehaviour(),
-                new UnblockAnotherPlayerCardBehaviour()
-
-            };
-
-            var eagleBehaviours = new List<IPlayerBehaviour>
-            {
-                new BlockOwnAndGetNewSticker()
-
-            };
-
-            _playerBehaviour = new PlayerBehaviour(tailsBehaviours1Priority, tailsBehaviours2Priority, eagleBehaviours);
+            _playerBehaviour = new PlayerBehaviour(tailsBehaviour, eagleBehaviours);
 
         }
 

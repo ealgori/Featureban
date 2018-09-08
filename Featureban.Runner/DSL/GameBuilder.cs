@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Featureban.Domain;
+using Featureban.Domain.Enums;
 
 namespace Featureban.Runner.DSL
 {
@@ -13,6 +14,7 @@ namespace Featureban.Runner.DSL
         private int _playersCount;
         private int _movesLimit=1;
         private int _wipLimit;
+        private bool withTracing;
 
 
        
@@ -35,16 +37,45 @@ namespace Featureban.Runner.DSL
             return this;
         }
 
+        public GameBuilder WithOnBoardChangedTracing()
+        {
+            withTracing = true;
+            return this;
+        }
+
+
+        
 
         public Game Build()
         {
             var players = Enumerable.Range(1, _playersCount).Select(i=> new PlayerBuilder().Build()).ToList();
 
-            return new Game(
+            var game = new Game(
                 players, 
                 coin, 
                 new BoardBuilder().WithWipLimit(_wipLimit).Build(), 
                 _movesLimit);
+
+            if (withTracing)
+                game.OnBoardChanged += (o, e) =>
+                {
+
+                    var cards = e.Board.Cards;
+                    var progress = cards.Count(c => c.State == CardState.InProgress);
+                    var progressUn = cards.Count(c => c.State == CardState.InProgress && !c.IsBlocked);
+
+                    var testing = cards.Count(c => c.State == CardState.InTesting);
+                    var testingUn = cards.Count(c => c.State == CardState.InTesting && !c.IsBlocked);
+
+                    var completed = cards.Count(c => c.State == CardState.Completed);
+                    var completedUn = cards.Count(c => c.State == CardState.Completed && !c.IsBlocked);
+
+                    Console.WriteLine(e.CoinSide);
+                    Console.WriteLine(
+                        $"Progress:{progress}({progressUn}) Testing:{testing}({testingUn}) Completed: {completed}({completedUn})");
+                };
+
+            return game;
         }
     }
 }
