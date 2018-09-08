@@ -13,7 +13,7 @@ namespace Featureban.Tests.PlayerBehave
     {
 
         [Fact]
-        public void UnblockOwnBlockedCard_IfDropTails()
+        public void UnblockOwnBlockedCard_IfOwnCardBlocked()
         {
             var unblockCardBehaviour = new UnblockOwnCardBahaviour();
             var playerId = Guid.NewGuid();
@@ -29,7 +29,7 @@ namespace Featureban.Tests.PlayerBehave
 
 
         [Fact]
-        public void NotAllowUnblockOwnBlockedCard_IfDropTailsAndNoBlockedCards()
+        public void NotAllowUnblockOwnBlockedCard_IfNoOwnBlockedCards()
         {
             var unblockCardBehaviour = new UnblockOwnCardBahaviour();
             var playerId = Guid.NewGuid();

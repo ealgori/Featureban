@@ -10,7 +10,7 @@ namespace Featureban.Tests.PlayerBehave
     public class GetNewCardBehaviourShould
     {
         [Fact]
-        public void CanGetAdditionalCard_IfCoinDropEagle()
+        public void CanGetAdditionalCard_OnApply()
         {
             var getNewCardBehaviour = new GetNewCardBahaviour();
             var playerId = Guid.NewGuid();
@@ -24,24 +24,10 @@ namespace Featureban.Tests.PlayerBehave
             Assert.All(newBoard.Cards, c=> Assert.Equal(playerId,c.PlayerId));
         }
 
-        [Fact]
-        public void CanGetAdditionalCard_IfCoinDropTails()
-        {
-            var getNewCardBehaviour = new GetNewCardBahaviour();
-            var playerId = Guid.NewGuid();
-            var card = Create.Card.OwnedTo(playerId).Build();
-            var board = Create.Board.WithCards(card).Build();
-
-            var newBoard = getNewCardBehaviour.Apply(playerId, board,CoinSide.Tails);
-
-            Assert.True(getNewCardBehaviour.CanApply(playerId, board, CoinSide.Tails));
-            Assert.Equal(2, newBoard.Cards.Count());
-            Assert.All(newBoard.Cards, c => Assert.Equal(playerId, c.PlayerId));
-        }
-
+    
 
         [Fact]
-        public void NotAllowGetNewCard_IfWipLimitExceedAndCoinDropTails()
+        public void NotAllowGetNewCard_IfWipLimitExceed()
         {
             var getNewCardBehaviour = new GetNewCardBahaviour();
             var wipLimit = Create.WipLimit.WithLimit(1).Build();
@@ -54,7 +40,7 @@ namespace Featureban.Tests.PlayerBehave
         }
 
         [Fact]
-        public void AllowGetNewCard_IfWipLimitNotExceedAndCoinDropTails()
+        public void AllowGetNewCard_IfWipLimitNotExceed()
         {
             var getNewCardBehaviour = new GetNewCardBahaviour();
             var wipLimit = Create.WipLimit.WithLimit(2).Build();

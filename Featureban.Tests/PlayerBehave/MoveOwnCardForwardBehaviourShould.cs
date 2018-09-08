@@ -12,7 +12,7 @@ namespace Featureban.Tests.PlayerBehave
     public class MoveOwnCardForwardBehaviourShould
     {
         [Fact]
-        public void MoveOwnUnblockedCard_IfDropTails()
+        public void MoveOwnUnblockedCard_IfOwnCardUnblocked()
         {
             var moveOwnCardBehaviour = new MoveOwnCardForwardBehaviour();
             var playerId = Guid.NewGuid();
@@ -29,7 +29,7 @@ namespace Featureban.Tests.PlayerBehave
         
 
         [Fact]
-        public void NotAllowMoveOwnUnblockedCard_IfDropTailsAndNoOwnUnblockdCards()
+        public void NotAllowMoveOwnUnblockedCard_IfNoOwnUnblockdCards()
         {
             var moveOwnCardBehaviour = new MoveOwnCardForwardBehaviour();
             var playerId = Guid.NewGuid();
@@ -41,7 +41,7 @@ namespace Featureban.Tests.PlayerBehave
         }
 
         [Fact]
-        public void NotAllowMoveOwnUnblockedCard_IfDropTailsAndWipLimitExceed()
+        public void NotAllowMoveOwnUnblockedCard_IfWipLimitExceed()
         {
             var moveOwnCardBehaviour = new MoveOwnCardForwardBehaviour();
             var playerId = Guid.NewGuid();
@@ -56,7 +56,7 @@ namespace Featureban.Tests.PlayerBehave
         }
 
         [Fact]
-        public void AllowMoveOwnUnblockedCard_IfDropTailsAndWipLimitNotExceed()
+        public void AllowMoveOwnUnblockedCard_WipLimitNotExceed()
         {
             var moveOwnCardBehaviour = new MoveOwnCardForwardBehaviour();
             var playerId = Guid.NewGuid();

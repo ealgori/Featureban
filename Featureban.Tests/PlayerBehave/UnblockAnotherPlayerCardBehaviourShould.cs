@@ -12,7 +12,7 @@ namespace Featureban.Tests.PlayerBehave
     public class UnblockAnotherPlayerCardBehaviourShould
     {
         [Fact]
-        public void UnblockAnotherPlayerBlockedCard_IfDropTails()
+        public void UnblockAnotherPlayerBlockedCard_IfCardBlocked()
         {
             var unblockAnotherPlayerCardBehaviour = new UnblockAnotherPlayerCardBehaviour();
             var playerId = Guid.NewGuid();
@@ -29,7 +29,7 @@ namespace Featureban.Tests.PlayerBehave
       
 
         [Fact]
-        public void NotAllowUnblockAnotherPlayerBlockedCard_IfDropTailsAndNoBlockedCards()
+        public void NotAllowUnblockAnotherPlayerBlockedCard_IfNoBlockedCards()
         {
             var unblockAnotherPlayerCardBehaviour = new UnblockAnotherPlayerCardBehaviour(); ;
             var playerId = Guid.NewGuid();

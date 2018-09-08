@@ -12,7 +12,7 @@ namespace Featureban.Tests.PlayerBehave
     public class MoveAnotherPlayerCardForwardBehaviourShould
     {
         [Fact]
-        public void MoveAnotherPlayerUnblockedCard_IfDropTails()
+        public void MoveAnotherPlayerUnblockedCard_IfCardUnblocked()
         {
             var moveAnotherPlayerCardForwardBehaviour = new MoveAnotherPlayerCardForwardBehaviour();
             var playerId = Guid.NewGuid();
@@ -28,7 +28,7 @@ namespace Featureban.Tests.PlayerBehave
 
 
         [Fact]
-        public void NotAllowsMoveAnotherPlayerUnblockedCard_IfDropTailsAndNotUnblockedCards()
+        public void NotAllowsMoveAnotherPlayerUnblockedCard_IfCardBlocked()
         {
             var moveAnotherPlayerCardForwardBehaviour = new MoveAnotherPlayerCardForwardBehaviour();
             var playerId = Guid.NewGuid();

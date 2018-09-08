@@ -12,7 +12,7 @@ namespace Featureban.Tests.PlayerBehave
     public class BlockOwnCardBehaviourShould
     {
         [Fact]
-        public void BlockOwnUnBlockedCard_IfDropEagle()
+        public void BlockOwnUnBlockedCard_IfOwnCardUnblocked()
         {
             var blockCardBehaviour = new BlockOwnCardBahaviour();
             var playerId = Guid.NewGuid();
@@ -28,7 +28,7 @@ namespace Featureban.Tests.PlayerBehave
 
 
         [Fact]
-        public void NotAllowBlockOwnUnBlockedCard_IfDropEagleAndNoUnlockedCard()
+        public void NotAllowBlockOwnUnBlockedCard_IfOwnCardBlocked()
         {
             var blockCardBehaviour = new BlockOwnCardBahaviour();
             var playerId = Guid.NewGuid();
