@@ -23,7 +23,7 @@ namespace Featureban.Domain.PlayerBehave.Single
 
         public Board Apply(Guid playerId, Board board, CoinSide coinSide)
         {
-            var card = board.Cards.First(c=>_selector(c,playerId,board));
+            var card = board.Cards.Where(c => _selector(c, playerId, board)).OrderBy(_ => Guid.NewGuid()).First();
             var newCard = card.MoveForward();
 
             return board.ReplaceCard(card, newCard);
