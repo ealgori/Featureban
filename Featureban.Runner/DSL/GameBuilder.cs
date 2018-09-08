@@ -12,16 +12,16 @@ namespace Featureban.Runner.DSL
     {
         private ICoin coin = new Coin();
         private int _playersCount;
-        private int _movesLimit=1;
+        private int _stagesLimit=1;
         private int _wipLimit;
         private bool withTracing;
 
 
        
 
-        public GameBuilder WithMovesLimit(int movesLimit)
+        public GameBuilder WithStagesLimit(int stagesLimit)
         {
-            this._movesLimit = movesLimit;
+            this._stagesLimit = stagesLimit;
             return this;
         }
 
@@ -54,7 +54,7 @@ namespace Featureban.Runner.DSL
                 players, 
                 coin, 
                 new BoardBuilder().WithWipLimit(_wipLimit).Build(), 
-                _movesLimit);
+                _stagesLimit);
 
             if (withTracing)
                 game.OnBoardChanged += (o, e) =>

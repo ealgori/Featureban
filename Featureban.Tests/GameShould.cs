@@ -98,7 +98,7 @@ namespace Featureban.Tests
         }
 
         [Fact]
-        public void PerformExact5Moves_WhenPlayAndMoveLimitIs5()
+        public void PerformExact5Stages_WhenPlayAndStagesLimitIs5()
         {
             var playerList = new List<Player>
             {
@@ -108,12 +108,12 @@ namespace Featureban.Tests
             var board = Create.Board.Build();
             var game = Create.Game
                 .WithBoard(board)
-                .WithMovesLimit(5)
+                .WithStagesLimit(5)
                 .WithPlayers(playerList).Build();
 
             game.Play();
 
-            Assert.Equal(5, game.MovesDone);
+            Assert.Equal(5, game.StagesDone);
         }
     }
 }

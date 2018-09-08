@@ -14,24 +14,24 @@ namespace Featureban.Domain
     
     public class Game
     {
-        private readonly int _moveLimit;
+        private readonly int _stagesLimit;
         public List<Player> Players { get; }
         public Board Board { get; private set; }
         public ICoin Coin { get; }
         public Guid Id { get;}
-        public int MovesDone { get; private set; } = 0;
+        public int StagesDone { get; private set; } = 0;
 
         public event EventHandler<BoardChangedEventArgs> OnBoardChanged;
 
 
 
-        public Game(Guid id, List<Player> players, ICoin coin, Board board, int moveLimit)
+        public Game(Guid id, List<Player> players, ICoin coin, Board board, int stagesLimit)
         {
             if(players==null || !players.Any())
                 throw new ArgumentException("No one player in game");
-            if(moveLimit==0)
+            if(stagesLimit==0)
                 throw new ArgumentException("Game without move limits");
-            _moveLimit = moveLimit;
+            _stagesLimit = stagesLimit;
 
             Players = players;
             Board = board ?? throw new ArgumentException("No board in game");
@@ -69,21 +69,18 @@ namespace Featureban.Domain
             var newBoard = player.Play(coinSide, Board);
             UpdateBoard(newBoard);
             OnBoardChanged?.Invoke(this, new BoardChangedEventArgs(newBoard, coinSide));
-            MovesDone++;
         }
 
 
         public void Play()
         {
-            while (MovesDone < _moveLimit)
+            for (int i = 0; i < _stagesLimit; i++)
             {
                 foreach (var player in Players)
                 {
                     PlayerIterate(player);
-                    
-                    if (MovesDone >= _moveLimit)
-                        break;
                 }
+                StagesDone++;
             }
         }
 

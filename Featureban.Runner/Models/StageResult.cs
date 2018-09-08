@@ -18,12 +18,12 @@ namespace Featureban.Runner.Models
 
         public override string ToString()
         {
-            return $"Players:{_stage.PlayersCount} Moves:{_stage.MovesLimit} Games:{_stage.GamesCount} Wip:{_stage.WipLimit} {_result}";
+            return $"Players:{_stage.PlayersCount} Stage:{_stage.StagesLimit} Games:{_stage.GamesCount} Wip:{_stage.WipLimit} {_result}";
         }
 
         public string ToCsvRow()
         {
-            return $"{_stage.PlayersCount}:{_stage.MovesLimit} {_stage.WipLimit} {_result}";
+            return $"{_stage.PlayersCount}:{_stage.StagesLimit} {_stage.WipLimit} {_result}";
         }
     }
 }

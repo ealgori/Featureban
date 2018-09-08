@@ -13,33 +13,33 @@ namespace Featureban.Runner
         {
             var stages = new List<Stage>
             {
-                new Stage() {PlayersCount = 3, MovesLimit = 15, GamesCount = 1000, WipLimit = 0},
-                new Stage() {PlayersCount = 3, MovesLimit = 15, GamesCount = 1000, WipLimit = 1},
-                new Stage() {PlayersCount = 3, MovesLimit = 15, GamesCount = 1000, WipLimit = 2},
-                new Stage() {PlayersCount = 3, MovesLimit = 15, GamesCount = 1000, WipLimit = 3},
-                new Stage() {PlayersCount = 3, MovesLimit = 15, GamesCount = 1000, WipLimit = 4},
-                new Stage() {PlayersCount = 3, MovesLimit = 15, GamesCount = 1000, WipLimit = 5},
+                new Stage() {PlayersCount = 3, StagesLimit = 15, GamesCount = 1000, WipLimit = 0},
+                new Stage() {PlayersCount = 3, StagesLimit = 15, GamesCount = 1000, WipLimit = 1},
+                new Stage() {PlayersCount = 3, StagesLimit = 15, GamesCount = 1000, WipLimit = 2},
+                new Stage() {PlayersCount = 3, StagesLimit = 15, GamesCount = 1000, WipLimit = 3},
+                new Stage() {PlayersCount = 3, StagesLimit = 15, GamesCount = 1000, WipLimit = 4},
+                new Stage() {PlayersCount = 3, StagesLimit = 15, GamesCount = 1000, WipLimit = 5},
 
-                new Stage() {PlayersCount = 3, MovesLimit = 20, GamesCount = 1000, WipLimit = 0},
-                new Stage() {PlayersCount = 3, MovesLimit = 20, GamesCount = 1000, WipLimit = 1},
-                new Stage() {PlayersCount = 3, MovesLimit = 20, GamesCount = 1000, WipLimit = 2},
-                new Stage() {PlayersCount = 3, MovesLimit = 20, GamesCount = 1000, WipLimit = 3},
-                new Stage() {PlayersCount = 3, MovesLimit = 20, GamesCount = 1000, WipLimit = 4},
-                new Stage() {PlayersCount = 3, MovesLimit = 20, GamesCount = 1000, WipLimit = 5},
+                new Stage() {PlayersCount = 3, StagesLimit = 20, GamesCount = 1000, WipLimit = 0},
+                new Stage() {PlayersCount = 3, StagesLimit = 20, GamesCount = 1000, WipLimit = 1},
+                new Stage() {PlayersCount = 3, StagesLimit = 20, GamesCount = 1000, WipLimit = 2},
+                new Stage() {PlayersCount = 3, StagesLimit = 20, GamesCount = 1000, WipLimit = 3},
+                new Stage() {PlayersCount = 3, StagesLimit = 20, GamesCount = 1000, WipLimit = 4},
+                new Stage() {PlayersCount = 3, StagesLimit = 20, GamesCount = 1000, WipLimit = 5},
 
-                new Stage() {PlayersCount = 5, MovesLimit = 15, GamesCount = 1000, WipLimit = 0},
-                new Stage() {PlayersCount = 5, MovesLimit = 15, GamesCount = 1000, WipLimit = 1},
-                new Stage() {PlayersCount = 5, MovesLimit = 15, GamesCount = 1000, WipLimit = 2},
-                new Stage() {PlayersCount = 5, MovesLimit = 15, GamesCount = 1000, WipLimit = 3},
-                new Stage() {PlayersCount = 5, MovesLimit = 15, GamesCount = 1000, WipLimit = 4},
-                new Stage() {PlayersCount = 5, MovesLimit = 15, GamesCount = 1000, WipLimit = 5},
+                new Stage() {PlayersCount = 5, StagesLimit = 15, GamesCount = 1000, WipLimit = 0},
+                new Stage() {PlayersCount = 5, StagesLimit = 15, GamesCount = 1000, WipLimit = 1},
+                new Stage() {PlayersCount = 5, StagesLimit = 15, GamesCount = 1000, WipLimit = 2},
+                new Stage() {PlayersCount = 5, StagesLimit = 15, GamesCount = 1000, WipLimit = 3},
+                new Stage() {PlayersCount = 5, StagesLimit = 15, GamesCount = 1000, WipLimit = 4},
+                new Stage() {PlayersCount = 5, StagesLimit = 15, GamesCount = 1000, WipLimit = 5},
 
-                new Stage() {PlayersCount = 5, MovesLimit = 20, GamesCount = 1000, WipLimit = 0},
-                new Stage() {PlayersCount = 5, MovesLimit = 20, GamesCount = 1000, WipLimit = 1},
-                new Stage() {PlayersCount = 5, MovesLimit = 20, GamesCount = 1000, WipLimit = 2},
-                new Stage() {PlayersCount = 5, MovesLimit = 20, GamesCount = 1000, WipLimit = 3},
-                new Stage() {PlayersCount = 5, MovesLimit = 20, GamesCount = 1000, WipLimit = 4},
-                new Stage() {PlayersCount = 5, MovesLimit = 20, GamesCount = 1000, WipLimit = 5},
+                new Stage() {PlayersCount = 5, StagesLimit = 20, GamesCount = 1000, WipLimit = 0},
+                new Stage() {PlayersCount = 5, StagesLimit = 20, GamesCount = 1000, WipLimit = 1},
+                new Stage() {PlayersCount = 5, StagesLimit = 20, GamesCount = 1000, WipLimit = 2},
+                new Stage() {PlayersCount = 5, StagesLimit = 20, GamesCount = 1000, WipLimit = 3},
+                new Stage() {PlayersCount = 5, StagesLimit = 20, GamesCount = 1000, WipLimit = 4},
+                new Stage() {PlayersCount = 5, StagesLimit = 20, GamesCount = 1000, WipLimit = 5},
 
             };
 
@@ -50,7 +50,7 @@ namespace Featureban.Runner
                 for (int i = 0; i < stage.GamesCount; i++)
                 {
                     var game = Create.Game
-                        .WithMovesLimit(stage.MovesLimit)
+                        .WithStagesLimit(stage.StagesLimit)
                         .WithPlayersCount(stage.PlayersCount)
                         .WithWipLimit(stage.WipLimit).Build();
 
