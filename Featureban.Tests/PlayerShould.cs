@@ -29,11 +29,10 @@ namespace Featureban.Tests
         }
 
         [Fact]
-        public void CanGetAdditionalCard_IfCoinDropTails()
+        public void CanGetAdditionalCard_WhenPlayerWithGetNewCardBehaviour()
         {
             var player = Create.Player.WithGetNewCardBehaviour().Build();
             var game = Create.Game
-                .WithTwoTailsCoin()
                 .WithPlayers(new List<Player> { player })
                 .Build();
             
@@ -46,13 +45,12 @@ namespace Featureban.Tests
 
 
         [Fact]
-        public void CanMoveOwnCardForward_IfCoinDropTails()
+        public void CanMoveOwnCardForward_WhenPlayerWithMoveOwnCardForwardBehaviour()
         {
             var player = Create.Player.WithMoveOwnCardForwardBehaviour().Build();
             var card = Create.Card.OwnedTo(player.Id).Build();
             var board = Create.Board.WithCards(card).Build();
             var game = Create.Game
-                .WithTwoTailsCoin()
                 .WithBoard(board)
                 .WithPlayers(new List<Player> { player })
                 .Build();
@@ -64,13 +62,12 @@ namespace Featureban.Tests
         }
 
         [Fact]
-        public void CanMoveAnotherPlayerCardForward_IfCoinDropTails()
+        public void CanMoveAnotherPlayerCardForward_WithWithMoveAnotherPlayerCardForwardBehaviour()
         {
             var player = Create.Player.WithMoveAnotherPlayerCardForwardBehaviour().Build();
             var card = Create.Card.Build();
             var board = Create.Board.WithCards(card).Build();
             var game = Create.Game
-                .WithTwoTailsCoin()
                 .WithBoard(board)
                 .WithPlayers(new List<Player> { player })
                 .Build();
