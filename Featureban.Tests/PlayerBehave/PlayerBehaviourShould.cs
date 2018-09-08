@@ -14,12 +14,11 @@ namespace Featureban.Tests.PlayerBehave
         public void SkipMove_IfNoBehavioursAcceptable()
         {
             var playerBehaviour = Create.PlayerBehavoiur
-                .WithTailsBehaviours1Priority(new UnblockOwnCardBahaviour())
-                .WithTailsBehaviours2Priority(new UnblockAnotherPlayerCardBehaviour()).Build();
+                .WithTailBehaviours(new UnblockOwnCardBahaviour())
+                .Build();
             var playerId = Guid.NewGuid();
             var card1 = Create.Card.OwnedTo(playerId).Build();
-            var card2 = Create.Card.Build();
-            var board = Create.Board.WithCards(card1, card2).Build();
+            var board = Create.Board.WithCards(card1).Build();
 
             var newBoard = playerBehaviour.Apply(playerId, board, CoinSide.Tails);
 
@@ -27,21 +26,5 @@ namespace Featureban.Tests.PlayerBehave
             Assert.Equal(board,newBoard);
         }
 
-
-        [Fact]
-        public void ApplyBehavioursFrom2TailPrioriry_OnlyIfNoSatisfiedBehaveIn1TailPriority()
-        {
-            var playerBehaviour = Create.PlayerBehavoiur
-                .WithTailsBehaviours1Priority(new UnblockOwnCardBahaviour())
-                .WithTailsBehaviours2Priority(new UnblockAnotherPlayerCardBehaviour()).Build();
-            var playerId = Guid.NewGuid();
-            var card1 = Create.Card.OwnedTo(playerId).Build();
-            var card2 = Create.Card.WhichBlocked().Build();
-            var board = Create.Board.WithCards(card1, card2).Build();
-
-            var newBoard = playerBehaviour.Apply(playerId, board, CoinSide.Tails);
-
-            Assert.Single(newBoard.Cards, c=> !c.IsBlocked && c.PlayerId!=playerId);
-        }
     }
 }

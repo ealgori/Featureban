@@ -5,37 +5,38 @@ using System.Text;
 using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
 using Featureban.Domain.PlayerBehave.Full;
 using Featureban.Domain.PlayerBehave.Interface;
+using Featureban.Domain.PlayerBehave.Model;
 
 namespace Featureban.Tests.DSL
 {
     public class PlayerBehaviourBuilder
     {
-        private IEnumerable<IPlayerBehaviour> _tailsBehaviours1Priority= new List<IPlayerBehaviour>();
-        private IEnumerable<IPlayerBehaviour> _tailsBehaviours2Priority = new List<IPlayerBehaviour>();
-        private IEnumerable<IPlayerBehaviour> _eagleBehaviours = new List<IPlayerBehaviour>();
+        private IEnumerable<PlayerBehaviourContainer> _tailsBehaviours= new List<PlayerBehaviourContainer>();
+        private IEnumerable<PlayerBehaviourContainer> _eagleBehaviours = new List<PlayerBehaviourContainer>();
 
-        public PlayerBehaviourBuilder WithTailsBehaviours1Priority(IEnumerable<IPlayerBehaviour> tailsBehaviours)
+
+        public PlayerBehaviourBuilder WithTailBehaviours(IPlayerBehaviour tailBehaviour)
         {
-            this._tailsBehaviours1Priority = tailsBehaviours;
+            this._tailsBehaviours = new List<PlayerBehaviourContainer>
+            {
+                new PlayerBehaviourContainer(0,tailBehaviour)
+            };
+            return this;
+        }
+        public PlayerBehaviourBuilder WithTailsBehaviours(IEnumerable<PlayerBehaviourContainer> tailsBehaviours)
+        {
+            this._tailsBehaviours = tailsBehaviours;
             return this;
         }
 
-        public PlayerBehaviourBuilder WithTailsBehaviours1Priority(params IPlayerBehaviour[] tailsBehaviours)
+        public PlayerBehaviourBuilder WithTailsBehaviours(params PlayerBehaviourContainer[] tailsBehaviours)
         {
-            return WithTailsBehaviours1Priority(tailsBehaviours.AsEnumerable());
+            return WithTailsBehaviours(tailsBehaviours.AsEnumerable());
         }
-        public PlayerBehaviourBuilder WithTailsBehaviours2Priority(IEnumerable<IPlayerBehaviour> tailsBehaviours)
-        {
-            this._tailsBehaviours2Priority = tailsBehaviours;
-            return this;
-        }
+      
 
-        public PlayerBehaviourBuilder WithTailsBehaviours2Priority(params IPlayerBehaviour[] tailsBehaviours)
-        {
-            return WithTailsBehaviours2Priority(tailsBehaviours.AsEnumerable());
-        }
-
-        public PlayerBehaviourBuilder WithEagleBehaviours(IEnumerable<IPlayerBehaviour> eagleBehaviours)
+      
+        public PlayerBehaviourBuilder WithEagleBehaviours(IEnumerable<PlayerBehaviourContainer> eagleBehaviours)
         {
             this._eagleBehaviours = eagleBehaviours;
             return this;
@@ -43,7 +44,7 @@ namespace Featureban.Tests.DSL
 
         public PlayerBehaviour Build()
         {
-            return new PlayerBehaviour(_tailsBehaviours1Priority, _tailsBehaviours2Priority, _eagleBehaviours);
+            return new PlayerBehaviour(_tailsBehaviours, _eagleBehaviours);
         }
 
     }
