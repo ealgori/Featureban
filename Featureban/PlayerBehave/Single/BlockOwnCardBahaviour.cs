@@ -11,6 +11,7 @@ namespace Featureban.Domain.PlayerBehave.Single
     {
         private readonly Func<Card, Guid, bool> _selector = ((c, id) => 
             !c.IsBlocked 
+            && c.State!= CardState.Completed
             && c.PlayerId == id);
         public bool CanApply(Guid playerId, Board board, CoinSide coinSide)
         {

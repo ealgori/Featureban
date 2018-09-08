@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Xml;
 using Featureban.Domain.Enums;
+using Featureban.Domain.EventArguments;
 using Featureban.Domain.Interfaces;
 
 [assembly: InternalsVisibleTo("Featureban.Tests")]
@@ -19,6 +20,10 @@ namespace Featureban.Domain
         public ICoin Coin { get; }
         public Guid Id { get;}
         public int MovesDone { get; private set; } = 0;
+
+        public event EventHandler<BoardChangedEventArgs> OnBoardChanged;
+
+
 
         public Game(Guid id, List<Player> players, ICoin coin, Board board, int moveLimit)
         {
@@ -63,6 +68,7 @@ namespace Featureban.Domain
             var coinSide = player.DropCoin(Coin);
             var newBoard = player.Play(coinSide, Board);
             UpdateBoard(newBoard);
+            OnBoardChanged?.Invoke(this, new BoardChangedEventArgs(newBoard, coinSide));
             MovesDone++;
         }
 
@@ -84,6 +90,8 @@ namespace Featureban.Domain
         private void UpdateBoard(Board newBoard)
         {
             Board = newBoard;
+            
+           
         }
 
     }
