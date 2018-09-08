@@ -16,7 +16,7 @@ namespace Featureban.Domain.PlayerBehave.Single
             && c.PlayerId != id);
         public bool CanApply(Guid playerId, Board board, CoinSide coinSide)
         {
-            return coinSide == CoinSide.Tails && board.Cards.Any(c => _selector(c, playerId, board));
+            return board.Cards.Any(c => _selector(c, playerId, board));
 
         }
 

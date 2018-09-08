@@ -18,8 +18,7 @@ namespace Featureban.Domain.PlayerBehave.Multi
         }
         public bool CanApply(Guid playerId, Board board, CoinSide coinSide)
         {
-            return coinSide==CoinSide.Eagle
-                   && (blockOwnBehaviour.CanApply(playerId, board, coinSide)
+            return  (blockOwnBehaviour.CanApply(playerId, board, coinSide)
                        || getNewCardBehaviour.CanApply(playerId, board, coinSide));
 
         }

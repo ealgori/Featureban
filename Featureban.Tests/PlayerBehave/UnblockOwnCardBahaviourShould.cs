@@ -27,17 +27,6 @@ namespace Featureban.Tests.PlayerBehave
             Assert.Equal(playerId, newBoard.Cards.Single().PlayerId);
         }
 
-        [Fact]
-        public void NotAllowUnblockOwnBlockedCard_IfDropEagle()
-        {
-            var unblockCardBehaviour = new UnblockOwnCardBahaviour();
-            var playerId = Guid.NewGuid();
-            var card = Create.Card.WhichBlocked().OwnedTo(playerId).Build();
-            var board = Create.Board.WithCards(card).Build();
-
-            Assert.False(unblockCardBehaviour.CanApply(playerId, board, CoinSide.Eagle));
-
-        }
 
         [Fact]
         public void NotAllowUnblockOwnBlockedCard_IfDropTailsAndNoBlockedCards()
