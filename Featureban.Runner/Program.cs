@@ -41,6 +41,20 @@ namespace Featureban.Runner
                 new Stage() {PlayersCount = 5, StagesLimit = 20, GamesCount = 1000, WipLimit = 4},
                 new Stage() {PlayersCount = 5, StagesLimit = 20, GamesCount = 1000, WipLimit = 5},
 
+                new Stage() {PlayersCount = 10, StagesLimit = 15, GamesCount = 1000, WipLimit = 0},
+                new Stage() {PlayersCount = 10, StagesLimit = 15, GamesCount = 1000, WipLimit = 1},
+                new Stage() {PlayersCount = 10, StagesLimit = 15, GamesCount = 1000, WipLimit = 2},
+                new Stage() {PlayersCount = 10, StagesLimit = 15, GamesCount = 1000, WipLimit = 3},
+                new Stage() {PlayersCount = 10, StagesLimit = 15, GamesCount = 1000, WipLimit = 4},
+                new Stage() {PlayersCount = 10, StagesLimit = 15, GamesCount = 1000, WipLimit = 5},
+
+                new Stage() {PlayersCount = 10, StagesLimit = 20, GamesCount = 1000, WipLimit = 0},
+                new Stage() {PlayersCount = 10, StagesLimit = 20, GamesCount = 1000, WipLimit = 1},
+                new Stage() {PlayersCount = 10, StagesLimit = 20, GamesCount = 1000, WipLimit = 2},
+                new Stage() {PlayersCount = 10, StagesLimit = 20, GamesCount = 1000, WipLimit = 3},
+                new Stage() {PlayersCount = 10, StagesLimit = 20, GamesCount = 1000, WipLimit = 4},
+                new Stage() {PlayersCount = 10, StagesLimit = 20, GamesCount = 1000, WipLimit = 5},
+
             };
 
             List<StageResult> stageResults = new List<StageResult>();

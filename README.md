@@ -1,1 +1,1 @@
-﻿![Результаты](ResultDiagram.jpg)
+﻿![Результаты ](ResultDiagram.jpg)
