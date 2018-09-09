@@ -8,7 +8,7 @@ namespace Featureban.Domain.PlayerBehave.Interface
 {
     public interface IPlayerBehaviour
     {
-        bool CanApply(Guid playerId, Board board, CoinSide coinSide);
-        Board Apply(Guid playerId, Board board, CoinSide coinSide);
+        bool CanApply(string playerName, Board board, CoinSide coinSide);
+        Board Apply(string playerName, Board board, CoinSide coinSide);
     }
 }

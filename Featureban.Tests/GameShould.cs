@@ -25,8 +25,8 @@ namespace Featureban.Tests
                 .WithPlayers(playerList)
                 .Build();
 
-            Assert.Equal(playerList[0].Id, game.Players.First().Id);
-            Assert.Equal(playerList[1].Id, game.Players.Last().Id);
+            Assert.Equal(playerList[0].Name, game.Players.First().Name);
+            Assert.Equal(playerList[1].Name, game.Players.Last().Name);
 
 
         }
@@ -44,7 +44,7 @@ namespace Featureban.Tests
                 .WithTwoEagleCoin()
                 .WithPlayers(playerList).Build();
 
-            Assert.Equal(game.Board.Cards.First().PlayerId, game.Players.First().Id);
+            Assert.Equal(game.Board.Cards.First().PlayerName, game.Players.First().Name);
             
 
 
@@ -88,7 +88,7 @@ namespace Featureban.Tests
 
             Assert.Single(game.Board.Cards, 
                 card=> playerList.Any(
-                    player=> player.Id == card.PlayerId
+                    player=> player.Name == card.PlayerName
                 )
             );
             

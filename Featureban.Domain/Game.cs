@@ -55,7 +55,7 @@ namespace Featureban.Domain
             {
                 var cardsList = new List<Card>(this.Board.Cards)
                 {
-                    new Card(player.Id, CardState.InProgress)
+                    new Card(player.Name, CardState.InProgress)
                 };
                 UpdateBoard(new Board(cardsList, Board.WipLimit));
             }

@@ -18,11 +18,11 @@ namespace Featureban.Tests.PlayerBehave
             var playerBehaviour = Create.PlayerBehavoiur
                 .WithTailBehaviours(new UnblockOwnCardBahaviour())
                 .Build();
-            var playerId = Guid.NewGuid();
-            var card1 = Create.Card.OwnedTo(playerId).Build();
+            var playerName = "Ivan";
+            var card1 = Create.Card.OwnedTo(playerName).Build();
             var board = Create.Board.WithCards(card1).Build();
 
-            var newBoard = playerBehaviour.Apply(playerId, board, CoinSide.Tails);
+            var newBoard = playerBehaviour.Apply(playerName, board, CoinSide.Tails);
 
 
             Assert.Equal(board,newBoard);
@@ -42,17 +42,17 @@ namespace Featureban.Tests.PlayerBehave
             var playerBehaviour = Create.PlayerBehavoiur
                 .WithTailsBehaviours(behaviours)
                 .Build();
-            var playerId = Guid.NewGuid();
-            var card = Create.Card.OwnedTo(playerId).Build();
+            var playerName = "Ivan";
+            var card = Create.Card.OwnedTo(playerName).Build();
             var board = Create.Board.WithCards(card).Build();
 
-            var newBoard = playerBehaviour.Apply(playerId, board, CoinSide.Tails);
+            var newBoard = playerBehaviour.Apply(playerName, board, CoinSide.Tails);
 
 
-            Assert.True(getNewCardBehaviour.CanApply(playerId,board,CoinSide.Tails));
-            Assert.True(moveOwnCardBehaviour.CanApply(playerId, board, CoinSide.Tails));
+            Assert.True(getNewCardBehaviour.CanApply(playerName,board,CoinSide.Tails));
+            Assert.True(moveOwnCardBehaviour.CanApply(playerName, board, CoinSide.Tails));
             Assert.Equal(2, newBoard.Cards.Count());
-            Assert.All(newBoard.Cards, c=> Assert.Equal(playerId, c.PlayerId));
+            Assert.All(newBoard.Cards, c=> Assert.Equal(playerName, c.PlayerName));
 
         }
 

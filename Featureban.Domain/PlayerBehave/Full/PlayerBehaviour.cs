@@ -22,34 +22,34 @@ namespace Featureban.Domain.PlayerBehave.Full
             this.eagleBehaviours = eagleBehaviours;
         }
 
-        public bool CanApply(Guid playerId, Board board, CoinSide coinSide) => true;
+        public bool CanApply(string playerName, Board board, CoinSide coinSide) => true;
         
 
-        public Board Apply(Guid playerId, Board board, CoinSide coinSide)
+        public Board Apply(string playerName, Board board, CoinSide coinSide)
         {
             if (coinSide == CoinSide.Tails)
             {
-                var satisfidedBehaves = tailsBehaviours.Where(b => b.Behaviour.CanApply(playerId, board, coinSide));
+                var satisfidedBehaves = tailsBehaviours.Where(b => b.Behaviour.CanApply(playerName, board, coinSide));
                 if (!satisfidedBehaves.Any())
-                    return skipMoveBehaviour.Apply(playerId, board, coinSide);
+                    return skipMoveBehaviour.Apply(playerName, board, coinSide);
                 var orderedByProirity = satisfidedBehaves
                     .OrderBy(b=>b.Priority)
                     .ThenBy(_=> Guid.NewGuid());
-                return orderedByProirity.First().Behaviour.Apply(playerId, board, coinSide);
+                return orderedByProirity.First().Behaviour.Apply(playerName, board, coinSide);
             }
 
             if (coinSide == CoinSide.Eagle)
             {
-                var satisfidedBehaves =eagleBehaviours.Where(b => b.Behaviour.CanApply(playerId, board, coinSide)).ToList();
+                var satisfidedBehaves =eagleBehaviours.Where(b => b.Behaviour.CanApply(playerName, board, coinSide)).ToList();
                 if (!satisfidedBehaves.Any())
-                    return skipMoveBehaviour.Apply(playerId, board, coinSide);
+                    return skipMoveBehaviour.Apply(playerName, board, coinSide);
                 var orderedByPriority = satisfidedBehaves
                     .OrderBy(b => b.Priority)
                     .ThenBy(_ => Guid.NewGuid());
-                return orderedByPriority.First().Behaviour.Apply(playerId, board, coinSide);
+                return orderedByPriority.First().Behaviour.Apply(playerName, board, coinSide);
             }
 
-            return skipMoveBehaviour.Apply(playerId, board, coinSide);
+            return skipMoveBehaviour.Apply(playerName, board, coinSide);
 
         }
     }

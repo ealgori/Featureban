@@ -9,15 +9,15 @@ namespace Featureban.Domain.PlayerBehave.Single
 {
     public class GetNewCardBahaviour:IPlayerBehaviour
     {
-        public bool CanApply(Guid playerId, Board board, CoinSide coinSide) 
+        public bool CanApply(string playerName, Board board, CoinSide coinSide) 
             => board.HasSlotsFor(CardState.InProgress);
        
 
-        public Board Apply(Guid playerId, Board board, CoinSide coinSide)
+        public Board Apply(string playerName, Board board, CoinSide coinSide)
         {
             var cardsList = new List<Card>(board.Cards)
             {
-                new Card(playerId, CardState.InProgress)
+                new Card(playerName, CardState.InProgress)
             };
 
             return new Board(cardsList, board.WipLimit);

@@ -10,12 +10,17 @@ namespace Featureban.Domain
     public class Player
     {
         private readonly IPlayerBehaviour _behaviour;
-        public Guid Id { get; }
+        public string Name { get; }
 
-        public Player(IPlayerBehaviour behaviour)
+        public Player(string name,IPlayerBehaviour behaviour)
         {
             _behaviour = behaviour;
-            Id = Guid.NewGuid();
+            Name = name;
+        }
+
+        public Player(IPlayerBehaviour behaviour):this(Guid.NewGuid().ToString(), behaviour)
+        {
+           
         }
 
         public CoinSide DropCoin(ICoin coin)
@@ -26,8 +31,8 @@ namespace Featureban.Domain
 
         public Board Play(CoinSide coinSide, Board board)
         {
-            if (_behaviour.CanApply(Id, board, coinSide))
-                return _behaviour.Apply(Id, board, coinSide);
+            if (_behaviour.CanApply(Name, board, coinSide))
+                return _behaviour.Apply(Name, board, coinSide);
             return board;
 
         }

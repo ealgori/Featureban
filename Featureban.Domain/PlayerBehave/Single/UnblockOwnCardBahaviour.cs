@@ -9,18 +9,18 @@ namespace Featureban.Domain.PlayerBehave.Single
 {
     public class UnblockOwnCardBahaviour : IPlayerBehaviour
     {
-        private readonly Func<Card, Guid, bool> _selector = ((c, id) => 
+        private readonly Func<Card, string, bool> _selector = ((c, id) => 
             c.IsBlocked 
-            && c.PlayerId == id);
-        public bool CanApply(Guid playerId, Board board, CoinSide coinSide)
+            && c.PlayerName == id);
+        public bool CanApply(string playerName, Board board, CoinSide coinSide)
         {
-            return board.Cards.Any(c => _selector(c, playerId));
+            return board.Cards.Any(c => _selector(c, playerName));
                
         }
 
-        public Board Apply(Guid playerId, Board board, CoinSide coinSide)
+        public Board Apply(string playerName, Board board, CoinSide coinSide)
         {
-            var card = board.Cards.Where(c => _selector(c, playerId)).OrderBy(_ => Guid.NewGuid()).First();
+            var card = board.Cards.Where(c => _selector(c, playerName)).OrderBy(_ => Guid.NewGuid()).First();
             var newCard = card.Unblock();
 
             return board.ReplaceCard(card, newCard);

@@ -16,20 +16,20 @@ namespace Featureban.Domain.PlayerBehave.Multi
             
 
         }
-        public bool CanApply(Guid playerId, Board board, CoinSide coinSide)
+        public bool CanApply(string playerName, Board board, CoinSide coinSide)
         {
-            return  (blockOwnBehaviour.CanApply(playerId, board, coinSide)
-                       || getNewCardBehaviour.CanApply(playerId, board, coinSide));
+            return  (blockOwnBehaviour.CanApply(playerName, board, coinSide)
+                       || getNewCardBehaviour.CanApply(playerName, board, coinSide));
 
         }
 
-        public Board Apply(Guid playerId, Board board, CoinSide coinSide)
+        public Board Apply(string playerName, Board board, CoinSide coinSide)
         {
             Board newBoard = board;
-            if (blockOwnBehaviour.CanApply(playerId, board, coinSide))
-                newBoard = blockOwnBehaviour.Apply(playerId, board, coinSide);
-            if (getNewCardBehaviour.CanApply(playerId, board, coinSide))
-                newBoard = getNewCardBehaviour.Apply(playerId, newBoard, coinSide);
+            if (blockOwnBehaviour.CanApply(playerName, board, coinSide))
+                newBoard = blockOwnBehaviour.Apply(playerName, board, coinSide);
+            if (getNewCardBehaviour.CanApply(playerName, board, coinSide))
+                newBoard = getNewCardBehaviour.Apply(playerName, newBoard, coinSide);
             return newBoard;
         }
     }

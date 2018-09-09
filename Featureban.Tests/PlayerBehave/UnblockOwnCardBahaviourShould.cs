@@ -16,15 +16,15 @@ namespace Featureban.Tests.PlayerBehave
         public void UnblockOwnBlockedCard_IfOwnCardBlocked()
         {
             var unblockCardBehaviour = new UnblockOwnCardBahaviour();
-            var playerId = Guid.NewGuid();
-            var card = Create.Card.WhichBlocked().OwnedTo(playerId).Build();
+            var playerName = "Ivan";
+            var card = Create.Card.WhichBlocked().OwnedTo(playerName).Build();
             var board = Create.Board.WithCards(card).Build();
 
-            var newBoard = unblockCardBehaviour.Apply(playerId, board,CoinSide.Tails);
+            var newBoard = unblockCardBehaviour.Apply(playerName, board,CoinSide.Tails);
 
-            Assert.True(unblockCardBehaviour.CanApply(playerId,board,CoinSide.Tails));
+            Assert.True(unblockCardBehaviour.CanApply(playerName,board,CoinSide.Tails));
             Assert.False(newBoard.Cards.Single().IsBlocked);
-            Assert.Equal(playerId, newBoard.Cards.Single().PlayerId);
+            Assert.Equal(playerName, newBoard.Cards.Single().PlayerName);
         }
 
 
@@ -32,11 +32,11 @@ namespace Featureban.Tests.PlayerBehave
         public void NotAllowUnblockOwnBlockedCard_IfNoOwnBlockedCards()
         {
             var unblockCardBehaviour = new UnblockOwnCardBahaviour();
-            var playerId = Guid.NewGuid();
-            var card = Create.Card.OwnedTo(playerId).Build();
+            var playerName = "Ivan";
+            var card = Create.Card.OwnedTo(playerName).Build();
             var board = Create.Board.WithCards(card).Build();
 
-            Assert.False(unblockCardBehaviour.CanApply(playerId, board, CoinSide.Tails));
+            Assert.False(unblockCardBehaviour.CanApply(playerName, board, CoinSide.Tails));
 
         }
 

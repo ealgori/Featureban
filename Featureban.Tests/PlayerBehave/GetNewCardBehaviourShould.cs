@@ -13,15 +13,15 @@ namespace Featureban.Tests.PlayerBehave
         public void CanGetAdditionalCard_OnApply()
         {
             var getNewCardBehaviour = new GetNewCardBahaviour();
-            var playerId = Guid.NewGuid();
-            var card = Create.Card.OwnedTo(playerId).Build();
+            var playerName = "Ivan";
+            var card = Create.Card.OwnedTo(playerName).Build();
             var board = Create.Board.WithCards(card).Build();
 
-            var newBoard = getNewCardBehaviour.Apply(playerId, board,CoinSide.Eagle);
+            var newBoard = getNewCardBehaviour.Apply(playerName, board,CoinSide.Eagle);
 
-            Assert.True(getNewCardBehaviour.CanApply(playerId, board, CoinSide.Eagle));
+            Assert.True(getNewCardBehaviour.CanApply(playerName, board, CoinSide.Eagle));
             Assert.Equal(2, newBoard.Cards.Count());
-            Assert.All(newBoard.Cards, c=> Assert.Equal(playerId,c.PlayerId));
+            Assert.All(newBoard.Cards, c=> Assert.Equal(playerName,c.PlayerName));
         }
 
     
@@ -31,12 +31,12 @@ namespace Featureban.Tests.PlayerBehave
         {
             var getNewCardBehaviour = new GetNewCardBahaviour();
             var wipLimit = Create.WipLimit.WithLimit(1).Build();
-            var playerId = Guid.NewGuid();
-            var card = Create.Card.OwnedTo(playerId).InProgressState().Build();
+            var playerName = "Ivan";
+            var card = Create.Card.OwnedTo(playerName).InProgressState().Build();
             var board = Create.Board.WithCards(card).WithWipLimit(wipLimit).Build();
 
 
-            Assert.False(getNewCardBehaviour.CanApply(playerId, board, CoinSide.Tails));
+            Assert.False(getNewCardBehaviour.CanApply(playerName, board, CoinSide.Tails));
         }
 
         [Fact]
@@ -44,12 +44,12 @@ namespace Featureban.Tests.PlayerBehave
         {
             var getNewCardBehaviour = new GetNewCardBahaviour();
             var wipLimit = Create.WipLimit.WithLimit(2).Build();
-            var playerId = Guid.NewGuid();
-            var card = Create.Card.OwnedTo(playerId).InProgressState().Build();
+            var playerName = "Ivan";
+            var card = Create.Card.OwnedTo(playerName).InProgressState().Build();
             var board = Create.Board.WithCards(card).WithWipLimit(wipLimit).Build();
 
 
-            Assert.True(getNewCardBehaviour.CanApply(playerId, board, CoinSide.Tails));
+            Assert.True(getNewCardBehaviour.CanApply(playerName, board, CoinSide.Tails));
         }
 
 

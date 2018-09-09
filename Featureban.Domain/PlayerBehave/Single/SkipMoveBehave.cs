@@ -8,9 +8,9 @@ namespace Featureban.Domain.PlayerBehave.Single
 {
     public class SkipMoveBehave:IPlayerBehaviour
     {
-        public bool CanApply(Guid playerId, Board board, CoinSide coinSide) => true;
+        public bool CanApply(string playerName, Board board, CoinSide coinSide) => true;
 
-        public Board Apply(Guid playerId, Board board, CoinSide coinSide)
+        public Board Apply(string playerName, Board board, CoinSide coinSide)
         {
             return board;
         }

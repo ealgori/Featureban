@@ -9,13 +9,13 @@ namespace Featureban.Domain
     {
         public CardState State { get;}
         public bool IsBlocked { get;}
-        public Guid PlayerId { get;}
+        public string PlayerName { get;}
 
-        public Card(Guid playerId, CardState state, bool isBlocked = false)
+        public Card(string playerName, CardState state, bool isBlocked = false)
         {
             this.State = state;
             this.IsBlocked = isBlocked;
-            this.PlayerId = playerId;
+            this.PlayerName = playerName;
         }
 
         public Card MoveForward()
@@ -25,7 +25,7 @@ namespace Featureban.Domain
                 throw new InvalidOperationException($"Cannot move card with state '{State}' forward");
             }
             var nextState = State + 1;
-            return new Card(PlayerId,nextState);
+            return new Card(PlayerName, nextState);
         }
 
         public bool CanMoveForward()
@@ -38,7 +38,7 @@ namespace Featureban.Domain
         {
             if(IsBlocked)
                 throw new NotSupportedException("Card is already blocked");
-            return new Card(this.PlayerId, this.State, true);
+            return new Card(this.PlayerName, this.State, true);
 
         }
 
@@ -46,7 +46,7 @@ namespace Featureban.Domain
         {
             if(!IsBlocked)
                 throw new NotSupportedException("Card is not blocked");
-            return new Card(this.PlayerId, this.State, false);
+            return new Card(this.PlayerName, this.State, false);
         }
 
 
@@ -59,7 +59,7 @@ namespace Featureban.Domain
         {
             return
                 obj != null
-                && obj.PlayerId == this.PlayerId
+                && obj.PlayerName == this.PlayerName
                 && obj.IsBlocked == this.IsBlocked
                 && obj.State == this.State;
         }
@@ -69,7 +69,7 @@ namespace Featureban.Domain
         {
             if (object.ReferenceEquals(item1, item2)) { return true; }
             if ((object)item1 == null || (object)item2 == null) { return false; }
-            return item1.PlayerId == item2.PlayerId
+            return item1.PlayerName == item2.PlayerName
                     && item1.IsBlocked == item2.IsBlocked
                     && item1.State == item2.State;
         }
@@ -81,7 +81,7 @@ namespace Featureban.Domain
 
         public override int GetHashCode()
         {
-            return PlayerId.GetHashCode()&IsBlocked.GetHashCode()&State.GetHashCode();
+            return PlayerName.GetHashCode()&IsBlocked.GetHashCode()&State.GetHashCode();
         }
     }
 }
