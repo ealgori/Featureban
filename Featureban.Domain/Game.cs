@@ -16,7 +16,7 @@ namespace Featureban.Domain
     public class Game:Entity<Guid>
     {
         private readonly int _stagesLimit;
-        public List<Player> Players { get; }
+        public IEnumerable<Player> Players { get; }
         public Board Board { get; private set; }
         public ICoin Coin { get; }
         public int StagesDone { get; private set; } = 0;
