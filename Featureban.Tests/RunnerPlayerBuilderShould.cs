@@ -117,5 +117,26 @@ namespace Featureban.Tests
                 && !c.IsBlocked
                 && c.PlayerName == playerName);
         }
+
+
+        [Fact]
+        public void CreatePlayerWhichUnblockOwnCard_IfDropTailsAndCantGetNewOrMoveOwnCard()
+        {
+
+            var playerName = "Ivan";
+            
+            var player = new Runner.DSL.PlayerBuilder()
+                .WithName(playerName)
+                .Build();
+            var card = Create.Card.OwnedTo(playerName).InProgressState().WhichBlocked().Build();
+            var wipLimit = Create.WipLimit.WithLimit(1).Build();
+            var board = Create.Board.WithCards(card).WithWipLimit(wipLimit).Build();
+
+            var newBoard = player.Play(CoinSide.Tails, board);
+
+            Assert.Single(newBoard.Cards);
+            Assert.Single(newBoard.Cards, c => c.State == CardState.InProgress && !c.IsBlocked);
+            Assert.Single(newBoard.Cards, c => c.PlayerName == playerName);
+        }
     }
 }
