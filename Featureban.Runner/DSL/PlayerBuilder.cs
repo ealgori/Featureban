@@ -12,11 +12,13 @@ namespace Featureban.Runner.DSL
 {
     public class PlayerBuilder
     {
+        public IEnumerable<PlayerBehaviourContainer> TailsBehaviours { get; }
+        public IEnumerable<PlayerBehaviourContainer> EagleBehaviours { get; }
         private readonly IPlayerBehaviour _playerBehaviour;
        
         public PlayerBuilder()
         {
-            var tailsBehaviour = new List<PlayerBehaviourContainer>
+             TailsBehaviours =  new List<PlayerBehaviourContainer>
             {
                 new PlayerBehaviourContainer(1,new MoveOwnCardForwardBehaviour()),
                 new PlayerBehaviourContainer(2,new GetNewCardBahaviour()),
@@ -25,21 +27,21 @@ namespace Featureban.Runner.DSL
                 new PlayerBehaviourContainer(4,new UnblockAnotherPlayerCardBehaviour()),
             };
 
-       
 
 
-            var eagleBehaviours = new List<PlayerBehaviourContainer>
+
+            EagleBehaviours = new List<PlayerBehaviourContainer>
             {
                 new PlayerBehaviourContainer(1,new BlockOwnAndGetNewSticker())
-
             };
 
-            _playerBehaviour = new PlayerBehaviour(tailsBehaviour, eagleBehaviours);
+           
 
         }
 
         public Player Build()
         {
+            var playerBehaviour = new PlayerBehaviour(TailsBehaviours, EagleBehaviours);
             return new Player(_playerBehaviour);
         }
     }

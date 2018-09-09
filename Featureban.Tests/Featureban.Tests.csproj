@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Featureban.Domain\Featureban.Domain.csproj" />
+    <ProjectReference Include="..\Featureban.Runner\Featureban.Runner.csproj" />
   </ItemGroup>
 
 </Project>
