@@ -138,5 +138,30 @@ namespace Featureban.Tests
             Assert.Single(newBoard.Cards, c => c.State == CardState.InProgress && !c.IsBlocked);
             Assert.Single(newBoard.Cards, c => c.PlayerName == playerName);
         }
+
+
+        [Fact]
+        public void CreatePlayerWhichGetNewCard_IfDropTailsAndCantUnblockOrMoveOwnCard()
+        {
+
+            var playerName1 = "Ivan";
+            var playerName2 = "Vova";
+
+            var player = new Runner.DSL.PlayerBuilder()
+                .WithName(playerName1)
+                .Build();
+            var card1 = Create.Card.OwnedTo(playerName1).InProgressState().Build();
+            var card2 = Create.Card.OwnedTo(playerName2).InTestingState().Build();
+            var wipLimit = Create.WipLimit.WithInProgressLimit(2).WithInTestingLimit(1).Build();
+            var board = Create.Board.WithCards(card1,card2).WithWipLimit(wipLimit).Build();
+
+            var newBoard = player.Play(CoinSide.Tails, board);
+
+            Assert.Equal(3,newBoard.Cards.Count());
+            Assert.Equal(2, newBoard.Cards.Count(c=> 
+                c.State == CardState.InProgress
+                && !c.IsBlocked
+                && c.PlayerName == playerName1));
+        }
     }
 }
