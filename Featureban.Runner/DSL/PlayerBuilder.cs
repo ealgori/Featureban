@@ -14,7 +14,7 @@ namespace Featureban.Runner.DSL
     {
         public IEnumerable<PlayerBehaviourContainer> TailsBehaviours { get; }
         public IEnumerable<PlayerBehaviourContainer> EagleBehaviours { get; }
-        private readonly IPlayerBehaviour _playerBehaviour;
+        private string _playerName = Guid.NewGuid().ToString();
        
         public PlayerBuilder()
         {
@@ -27,22 +27,22 @@ namespace Featureban.Runner.DSL
                 new PlayerBehaviourContainer(4,new UnblockAnotherPlayerCardBehaviour()),
             };
 
-
-
-
             EagleBehaviours = new List<PlayerBehaviourContainer>
             {
                 new PlayerBehaviourContainer(1,new BlockOwnAndGetNewSticker())
             };
+        }
 
-           
-
+        public PlayerBuilder WithName(string name)
+        {
+            _playerName = name;
+            return this;
         }
 
         public Player Build()
         {
             var playerBehaviour = new PlayerBehaviour(TailsBehaviours, EagleBehaviours);
-            return new Player(_playerBehaviour);
+            return new Player(_playerName, new PlayerBehaviour(TailsBehaviours,EagleBehaviours));
         }
     }
 }
