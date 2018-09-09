@@ -71,8 +71,51 @@ namespace Featureban.Tests
 
             Assert.Single(newBoard.Cards, c=>c.State==CardState.InProgress&& c.IsBlocked);
             Assert.Single(newBoard.Cards, c => c.State == CardState.InTesting);
-
         }
 
+        [Fact]
+        public void CreatePlayerWhichUnblockOtherPlayerCard_IfDropTailsAndOwnCardsUnacessible()
+        {
+
+            var playerName1 = "Ivan";
+            var playerName2 = "Vova";
+            var player = new Runner.DSL.PlayerBuilder()
+                .WithName(playerName1)
+                .Build();
+            var card = Create.Card.OwnedTo(playerName2).InProgressState().WhichBlocked().Build();
+            var wipLimit = Create.WipLimit.WithLimit(1).Build();
+            var board = Create.Board.WithCards(card).WithWipLimit(wipLimit).Build();
+
+            var newBoard = player.Play(CoinSide.Tails, board);
+
+            Assert.Single(newBoard.Cards);
+            Assert.Single(newBoard.Cards, c => c.State == CardState.InProgress && !c.IsBlocked);
+            Assert.Single(newBoard.Cards, c => c.PlayerName == playerName2);
+        }
+
+
+        [Fact]
+        public void CreatePlayerWhichBlockOwnAndGetNewCard_IfDropEagle()
+        {
+
+            var playerName = "Ivan";
+            var player = new Runner.DSL.PlayerBuilder()
+                .WithName(playerName)
+                .Build();
+            var card = Create.Card.OwnedTo(playerName).InProgressState().Build();
+            var board = Create.Board.WithCards(card).Build();
+
+            var newBoard = player.Play(CoinSide.Eagle, board);
+
+            Assert.Equal(2, newBoard.Cards.Count());
+            Assert.Single(newBoard.Cards, c => 
+                c.State == CardState.InProgress 
+                && c.IsBlocked
+                && c.PlayerName==playerName);
+            Assert.Single(newBoard.Cards, c =>
+                c.State == CardState.InProgress
+                && !c.IsBlocked
+                && c.PlayerName == playerName);
+        }
     }
 }
