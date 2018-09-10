@@ -16,24 +16,6 @@ namespace Featureban.Tests
     {
       
 
-        [Fact]
-        public void UseDefaultEagleBehaviorsSettings_OnCreate()
-        {
-            var expectedEagleBehavioursSequence = new(int priority, Type type)[]
-            {
-                (1,typeof(BlockOwnAndGetNewSticker)),
-               
-            };
-
-            var playerBuilder = new Runner.DSL.PlayerBuilder();
-            var actualEagleBehavioursSequence = playerBuilder
-                .EagleBehaviours
-                .Select(c => (c.Priority, c.Behaviour.GetType())
-                );
-
-            Assert.Equal(expectedEagleBehavioursSequence, actualEagleBehavioursSequence);
-
-        }
 
         [Fact]
         public void CreatePlayerWhichMoveOwnCardFirstly_IfDropTails()
