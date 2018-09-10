@@ -18,14 +18,24 @@ namespace Featureban.Tests.PlayerBehave
             var playerBehaviour = Create.PlayerBehavoiur
                 .WithTailBehaviours(new UnblockOwnCardBahaviour())
                 .Build();
-            var playerName = "Ivan";
-            var card1 = Create.Card.OwnedTo(playerName).Build();
-            var board = Create.Board.WithCards(card1).Build();
 
-            var newBoard = playerBehaviour.Apply(playerName, board, CoinSide.Tails);
+            var boardMap = $@"  +-------------------------------+
+                                +InProgress|InTesting |Completed+
+                                +-------------------------------+
+                                +Ivan      |          |         +
+                                +          |          |         +
+                                +-------------------------------+";
+            var board = Create.Board
+              .FromMap(boardMap)
+              .Build();
 
-
-            Assert.Equal(board,newBoard);
+            var newBoard = playerBehaviour.Apply("Ivan", board, CoinSide.Tails);
+            AssertBoard.Equals($@"+-------------------------------+
+                                  +InProgress|InTesting |Completed+
+                                  +-------------------------------+
+                                  +Ivan      |          |         +
+                                  +          |          |         +
+                                  +-------------------------------+", newBoard);
         }
 
         [Fact]
@@ -42,18 +52,31 @@ namespace Featureban.Tests.PlayerBehave
             var playerBehaviour = Create.PlayerBehavoiur
                 .WithTailsBehaviours(behaviours)
                 .Build();
-            var playerName = "Ivan";
-            var card = Create.Card.OwnedTo(playerName).Build();
-            var board = Create.Board.WithCards(card).Build();
 
-            var newBoard = playerBehaviour.Apply(playerName, board, CoinSide.Tails);
+            var boardMap = $@"  +-------------------------------+
+                                +InProgress|InTesting |Completed+
+                                +-------------------------------+
+                                +Ivan      |          |         +
+                                +          |          |         +
+                                +-------------------------------+";
+            var board = Create.Board
+              .FromMap(boardMap)
+              .Build();
 
 
-            Assert.True(getNewCardBehaviour.CanApply(playerName,board,CoinSide.Tails));
-            Assert.True(moveOwnCardBehaviour.CanApply(playerName, board, CoinSide.Tails));
-            Assert.Equal(2, newBoard.Cards.Count());
-            Assert.All(newBoard.Cards, c=> Assert.Equal(playerName, c.PlayerName));
+            var newBoard = playerBehaviour.Apply("Ivan", board, CoinSide.Tails);
 
+
+            Assert.True(getNewCardBehaviour.CanApply("Ivan",board,CoinSide.Tails));
+            Assert.True(moveOwnCardBehaviour.CanApply("Ivan", board, CoinSide.Tails));
+          
+
+            AssertBoard.Equals($@"+-------------------------------+
+                                  +InProgress|InTesting |Completed+
+                                  +-------------------------------+
+                                  +Ivan      |          |         +
+                                  +Ivan      |          |         +
+                                  +-------------------------------+", newBoard);
         }
 
     }

@@ -15,15 +15,30 @@ namespace Featureban.Tests.PlayerBehave
         public void MoveAnotherPlayerUnblockedCard_IfCardUnblocked()
         {
             var moveAnotherPlayerCardForwardBehaviour = new MoveAnotherPlayerCardForwardBehaviour();
-            var playerName = "Ivan";
-            var card = Create.Card.Build();
-            var board = Create.Board.WithCards(card).Build();
+            //var playerName = "Ivan";
+            //var card = Create.Card.Build();
+            //var board = Create.Board.WithCards(card).Build();
 
-            var newBoard = moveAnotherPlayerCardForwardBehaviour.Apply(playerName, board,CoinSide.Tails);
+            var boardMap = $@"  +-------------------------------+
+                                +InProgress|InTesting |Completed+
+                                +-------------------------------+
+                                +Vova      |          |         +
+                                +          |          |         +
+                                +-------------------------------+";
+            var board = Create.Board
+              .FromMap(boardMap)
+              .Build();
 
-            Assert.True(moveAnotherPlayerCardForwardBehaviour.CanApply(playerName, board, CoinSide.Tails));
-            Assert.Equal(CardState.InTesting, newBoard.Cards.Single().State);
-            Assert.NotEqual(playerName, newBoard.Cards.Single().PlayerName);
+
+            var newBoard = moveAnotherPlayerCardForwardBehaviour.Apply("Ivan", board,CoinSide.Tails);
+
+            Assert.True(moveAnotherPlayerCardForwardBehaviour.CanApply("Ivan", board, CoinSide.Tails));
+            AssertBoard.Equals($@"+-------------------------------+
+                                  +InProgress|InTesting |Completed+
+                                  +-------------------------------+
+                                  +          |Vova      |         +
+                                  +          |          |         +
+                                  +-------------------------------+", newBoard);
         }
 
 

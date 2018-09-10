@@ -17,6 +17,12 @@ namespace Featureban.Tests.DSL
             return this;
         }
 
+        public BoardBuilder FromMap (string boardMap)
+        {
+            cards = BoardParser.Parse(boardMap).Cards;
+            return this;
+        }
+
         public BoardBuilder WithWipLimit(WipLimit wipLimit)
         {
             this._wipLimit = wipLimit;

@@ -16,15 +16,25 @@ namespace Featureban.Tests.PlayerBehave
         public void UnblockOwnBlockedCard_IfOwnCardBlocked()
         {
             var unblockCardBehaviour = new UnblockOwnCardBahaviour();
-            var playerName = "Ivan";
-            var card = Create.Card.WhichBlocked().OwnedTo(playerName).Build();
-            var board = Create.Board.WithCards(card).Build();
+            var boardMap = $@"  +-------------------------------+
+                                +InProgress|InTesting |Completed+
+                                +-------------------------------+
+                                +Ivan*     |          |         +
+                                +          |          |         +
+                                +-------------------------------+";
+            var board = Create.Board
+              .FromMap(boardMap)
+              .Build();
 
-            var newBoard = unblockCardBehaviour.Apply(playerName, board,CoinSide.Tails);
+            var newBoard = unblockCardBehaviour.Apply("Ivan", board,CoinSide.Tails);
 
-            Assert.True(unblockCardBehaviour.CanApply(playerName,board,CoinSide.Tails));
-            Assert.False(newBoard.Cards.Single().IsBlocked);
-            Assert.Equal(playerName, newBoard.Cards.Single().PlayerName);
+            Assert.True(unblockCardBehaviour.CanApply("Ivan",board,CoinSide.Tails));
+            AssertBoard.Equals($@"+-------------------------------+
+                                  +InProgress|InTesting |Completed+
+                                  +-------------------------------+
+                                  +Ivan      |          |         +
+                                  +          |          |         +
+                                  +-------------------------------+", newBoard);
         }
 
 

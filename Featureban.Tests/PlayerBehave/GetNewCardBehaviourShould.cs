@@ -13,15 +13,24 @@ namespace Featureban.Tests.PlayerBehave
         public void CanGetAdditionalCard_OnApply()
         {
             var getNewCardBehaviour = new GetNewCardBahaviour();
-            var playerName = "Ivan";
-            var card = Create.Card.OwnedTo(playerName).Build();
-            var board = Create.Board.WithCards(card).Build();
+            var boardMap = $@"  +-------------------------------+
+                                +InProgress|InTesting |Completed+
+                                +-------------------------------+
+                                +Ivan      |          |         +
+                                +          |          |         +
+                                +-------------------------------+";
+            var board = Create.Board
+              .FromMap(boardMap)
+              .Build();
+            var newBoard = getNewCardBehaviour.Apply("Ivan", board,CoinSide.Eagle);
 
-            var newBoard = getNewCardBehaviour.Apply(playerName, board,CoinSide.Eagle);
-
-            Assert.True(getNewCardBehaviour.CanApply(playerName, board, CoinSide.Eagle));
-            Assert.Equal(2, newBoard.Cards.Count());
-            Assert.All(newBoard.Cards, c=> Assert.Equal(playerName,c.PlayerName));
+            Assert.True(getNewCardBehaviour.CanApply("Ivan", board, CoinSide.Eagle));
+            AssertBoard.Equals($@"+-------------------------------+
+                                  +InProgress|InTesting |Completed+
+                                  +-------------------------------+
+                                  +Ivan      |          |         +
+                                  +Ivan      |          |         +
+                                  +-------------------------------+", newBoard);
         }
 
     

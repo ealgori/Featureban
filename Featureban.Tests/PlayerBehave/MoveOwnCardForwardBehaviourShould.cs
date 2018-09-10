@@ -15,18 +15,31 @@ namespace Featureban.Tests.PlayerBehave
         public void MoveOwnUnblockedCard_IfOwnCardUnblocked()
         {
             var moveOwnCardBehaviour = new MoveOwnCardForwardBehaviour();
-            var playerName = "Ivan";
-            var card = Create.Card.OwnedTo(playerName).Build();
-            var board = Create.Board.WithCards(card).Build();
+            var boardMap = $@"  +-------------------------------+
+                                +InProgress|InTesting |Completed+
+                                +-------------------------------+
+                                +Ivan      |          |         +
+                                +          |          |         +
+                                +-------------------------------+";
+            var board = Create.Board
+              .FromMap(boardMap)
+              .Build();
 
-            var newBoard = moveOwnCardBehaviour.Apply(playerName, board,CoinSide.Tails);
 
-            Assert.True(moveOwnCardBehaviour.CanApply(playerName, board, CoinSide.Tails));
-            Assert.Equal(CardState.InTesting, newBoard.Cards.Single().State);
-            Assert.Equal(playerName, newBoard.Cards.Single().PlayerName);
+
+            var newBoard = moveOwnCardBehaviour.Apply("Ivan", board,CoinSide.Tails);
+
+            Assert.True(moveOwnCardBehaviour.CanApply("Ivan", board, CoinSide.Tails));
+            AssertBoard.Equals($@"+-------------------------------+
+                                  +InProgress|InTesting |Completed+
+                                  +-------------------------------+
+                                  +          |Ivan      |         +
+                                  +          |          |         +
+                                  +-------------------------------+", newBoard);
+
         }
 
-        
+
 
         [Fact]
         public void NotAllowMoveOwnUnblockedCard_IfNoOwnUnblockdCards()

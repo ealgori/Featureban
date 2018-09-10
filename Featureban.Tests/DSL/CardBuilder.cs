@@ -23,6 +23,14 @@ namespace Featureban.Tests.DSL
             _cardState = CardState.InProgress;
             return this;
         }
+
+        public CardBuilder InState(int stateNum)
+        {
+            if (!Enum.IsDefined(typeof(CardState), stateNum))
+                throw new ArgumentException($"State with number {stateNum} not defined");
+            _cardState = (CardState)stateNum;
+            return this;
+        }
         public CardBuilder InTestingState()
         {
             _cardState = CardState.InTesting;

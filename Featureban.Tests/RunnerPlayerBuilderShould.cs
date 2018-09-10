@@ -21,63 +21,83 @@ namespace Featureban.Tests
         public void CreatePlayerWhichMoveOwnCardFirstly_IfDropTails()
         {
 
-            var playerName = "Ivan";
             var player = new Runner.DSL.PlayerBuilder()
-                .WithName(playerName)
+                .WithName("Ivan")
                 .Build();
-            var card1 = Create.Card.OwnedTo(playerName).InProgressState().Build();
-            var card2 = Create.Card.OwnedTo(playerName).WhichBlocked().InProgressState().Build();
-            var board = Create.Board.WithCards(card1,card2).Build();
+            var boardMap = $@"  +-------------------------------+
+                                +InProgress|InTesting |Completed+
+                                +-------------------------------+
+                                +Ivan      |          |         +
+                                +Ivan*     |          |         +
+                                +-------------------------------+";
+            var board = Create.Board
+                .FromMap(boardMap)
+                .Build();
 
             var newBoard = player.Play(CoinSide.Tails, board);
 
-            Assert.Single(newBoard.Cards, c=>c.State==CardState.InProgress&& c.IsBlocked);
-            Assert.Single(newBoard.Cards, c => c.State == CardState.InTesting);
+            AssertBoard.Equals($@"+-------------------------------+
+                                  +InProgress|InTesting |Completed+
+                                  +-------------------------------+
+                                  +Ivan*     |Ivan      |         +
+                                  +          |          |         +
+                                  +-------------------------------+", newBoard);
         }
 
         [Fact]
         public void CreatePlayerWhichUnblockOtherPlayerCard_IfDropTailsAndOwnCardsUnacessible()
         {
 
-            var playerName1 = "Ivan";
-            var playerName2 = "Vova";
             var player = new Runner.DSL.PlayerBuilder()
-                .WithName(playerName1)
+                .WithName("Ivan")
                 .Build();
-            var card = Create.Card.OwnedTo(playerName2).InProgressState().WhichBlocked().Build();
+            var boardMap = $@"  +-------------------------------+
+                                +InProgress|InTesting |Completed+
+                                +-------------------------------+
+                                +Vova*     |          |         +
+                                +          |          |         +
+                                +-------------------------------+";
             var wipLimit = Create.WipLimit.WithLimit(1).Build();
-            var board = Create.Board.WithCards(card).WithWipLimit(wipLimit).Build();
+            var board = Create.Board
+                .FromMap(boardMap)
+                .WithWipLimit(wipLimit)
+                .Build();
 
             var newBoard = player.Play(CoinSide.Tails, board);
 
-            Assert.Single(newBoard.Cards);
-            Assert.Single(newBoard.Cards, c => c.State == CardState.InProgress && !c.IsBlocked);
-            Assert.Single(newBoard.Cards, c => c.PlayerName == playerName2);
-        }
-
+            AssertBoard.Equals($@"+-------------------------------+
+                                  +InProgress|InTesting |Completed+
+                                  +-------------------------------+
+                                  +Vova      |          |         +
+                                  +          |          |         +
+                                  +-------------------------------+", newBoard);
+        }   
+        
 
         [Fact]
         public void CreatePlayerWhichBlockOwnAndGetNewCard_IfDropEagle()
         {
-
-            var playerName = "Ivan";
             var player = new Runner.DSL.PlayerBuilder()
-                .WithName(playerName)
+                .WithName("Ivan")
                 .Build();
-            var card = Create.Card.OwnedTo(playerName).InProgressState().Build();
-            var board = Create.Board.WithCards(card).Build();
+            var boardMap = $@"  +-------------------------------+
+                                +InProgress|InTesting |Completed+
+                                +-------------------------------+
+                                +Ivan      |          |         +
+                                +          |          |         +
+                                +-------------------------------+";
+            var board = Create.Board
+                .FromMap(boardMap)
+                .Build();
 
             var newBoard = player.Play(CoinSide.Eagle, board);
 
-            Assert.Equal(2, newBoard.Cards.Count());
-            Assert.Single(newBoard.Cards, c => 
-                c.State == CardState.InProgress 
-                && c.IsBlocked
-                && c.PlayerName==playerName);
-            Assert.Single(newBoard.Cards, c =>
-                c.State == CardState.InProgress
-                && !c.IsBlocked
-                && c.PlayerName == playerName);
+            AssertBoard.Equals($@"+-------------------------------+
+                                  +InProgress|InTesting |Completed+
+                                  +-------------------------------+
+                                  +Ivan      |          |         +
+                                  +Ivan*     |          |         +
+                                  +-------------------------------+", newBoard);
         }
 
 
@@ -85,45 +105,56 @@ namespace Featureban.Tests
         public void CreatePlayerWhichUnblockOwnCard_IfDropTailsAndCantGetNewOrMoveOwnCard()
         {
 
-            var playerName = "Ivan";
-            
             var player = new Runner.DSL.PlayerBuilder()
-                .WithName(playerName)
+                .WithName("Ivan")
                 .Build();
-            var card = Create.Card.OwnedTo(playerName).InProgressState().WhichBlocked().Build();
             var wipLimit = Create.WipLimit.WithLimit(1).Build();
-            var board = Create.Board.WithCards(card).WithWipLimit(wipLimit).Build();
+            var boardMap = $@"  +-------------------------------+
+                                +InProgress|InTesting |Completed+
+                                +-------------------------------+
+                                +Ivan*     |          |         +
+                                +          |          |         +
+                                +-------------------------------+";
+            var board = Create.Board
+                .FromMap(boardMap)
+                .WithWipLimit(wipLimit).Build();
 
             var newBoard = player.Play(CoinSide.Tails, board);
 
-            Assert.Single(newBoard.Cards);
-            Assert.Single(newBoard.Cards, c => c.State == CardState.InProgress && !c.IsBlocked);
-            Assert.Single(newBoard.Cards, c => c.PlayerName == playerName);
+            AssertBoard.Equals($@"+-------------------------------+
+                                  +InProgress|InTesting |Completed+
+                                  +-------------------------------+
+                                  +Ivan      |          |         +
+                                  +          |          |         +
+                                  +-------------------------------+", newBoard);
         }
 
 
         [Fact]
         public void CreatePlayerWhichGetNewCard_IfDropTailsAndCantUnblockOrMoveOwnCard()
         {
-
-            var playerName1 = "Ivan";
-            var playerName2 = "Vova";
-
             var player = new Runner.DSL.PlayerBuilder()
-                .WithName(playerName1)
+                .WithName("Ivan")
                 .Build();
-            var card1 = Create.Card.OwnedTo(playerName1).InProgressState().Build();
-            var card2 = Create.Card.OwnedTo(playerName2).InTestingState().Build();
             var wipLimit = Create.WipLimit.WithInProgressLimit(2).WithInTestingLimit(1).Build();
-            var board = Create.Board.WithCards(card1,card2).WithWipLimit(wipLimit).Build();
+            var boardMap = $@"  +-------------------------------+
+                                +InProgress|InTesting |Completed+
+                                +-------------------------------+
+                                +Ivan      |Vova      |         +
+                                +          |          |         +
+                                +-------------------------------+";
+            var board = Create.Board
+                .FromMap(boardMap)
+                .WithWipLimit(wipLimit).Build();
 
             var newBoard = player.Play(CoinSide.Tails, board);
 
-            Assert.Equal(3,newBoard.Cards.Count());
-            Assert.Equal(2, newBoard.Cards.Count(c=> 
-                c.State == CardState.InProgress
-                && !c.IsBlocked
-                && c.PlayerName == playerName1));
+            AssertBoard.Equals($@"+-------------------------------+
+                                  +InProgress|InTesting |Completed+
+                                  +-------------------------------+
+                                  +Ivan      |Vova      |         +
+                                  +Ivan      |          |         +
+                                  +-------------------------------+", newBoard);
         }
 
 
@@ -131,28 +162,29 @@ namespace Featureban.Tests
         [Fact]
         public void CreatePlayerWhichMoveOtherPlayerCard_IfDropTailsAndCantGetNewUnblockOrMoveOwnCard()
         {
-
-            var playerName1 = "Ivan";
-            var playerName2 = "Vova";
-
             var player = new Runner.DSL.PlayerBuilder()
-                .WithName(playerName1)
+                .WithName("Ivan")
                 .Build();
-            var card1 = Create.Card.OwnedTo(playerName1).InProgressState().Build();
-            var card2 = Create.Card.OwnedTo(playerName2).InTestingState().Build();
+            var boardMap = $@"  +-------------------------------+
+                                +InProgress|InTesting |Completed+
+                                +-------------------------------+
+                                +Ivan      |Vova      |         +
+                                +          |          |         +
+                                +-------------------------------+";
+
             var wipLimit = Create.WipLimit.WithLimit(1).Build();
-            var board = Create.Board.WithCards(card1, card2).WithWipLimit(wipLimit).Build();
+            var board = Create.Board
+                .FromMap(boardMap)
+                .WithWipLimit(wipLimit).Build();
 
             var newBoard = player.Play(CoinSide.Tails, board);
 
-            Assert.Equal(2, newBoard.Cards.Count());
-            Assert.Single(newBoard.Cards, c =>
-                c.State == CardState.Completed
-                && c.PlayerName == playerName2);
-            Assert.Single(newBoard.Cards, c =>
-                c.State == CardState.InProgress
-                && !c.IsBlocked
-                && c.PlayerName == playerName1);
+            AssertBoard.Equals($@"+-------------------------------+
+                                  +InProgress|InTesting |Completed+
+                                  +-------------------------------+
+                                  +Ivan      |          |Vova     +
+                                  +          |          |         +
+                                  +-------------------------------+", newBoard);
         }
     }
 }
