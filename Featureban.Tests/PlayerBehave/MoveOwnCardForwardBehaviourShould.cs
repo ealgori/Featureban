@@ -45,11 +45,17 @@ namespace Featureban.Tests.PlayerBehave
         public void NotAllowMoveOwnUnblockedCard_IfNoOwnUnblockdCards()
         {
             var moveOwnCardBehaviour = new MoveOwnCardForwardBehaviour();
-            var playerName = "Ivan";
-            var card = Create.Card.WhichBlocked().OwnedTo(playerName).Build();
-            var board = Create.Board.WithCards(card).Build();
+            var boardMap = $@"  +-------------------------------+
+                                +InProgress|InTesting |Completed+
+                                +-------------------------------+
+                                +Ivan*     |          |         +
+                                +          |          |         +
+                                +-------------------------------+";
+            var board = Create.Board
+              .FromMap(boardMap)
+              .Build();
 
-            Assert.False(moveOwnCardBehaviour.CanApply(playerName, board, CoinSide.Tails));
+            Assert.False(moveOwnCardBehaviour.CanApply("Ivan", board, CoinSide.Tails));
 
         }
 
@@ -57,14 +63,19 @@ namespace Featureban.Tests.PlayerBehave
         public void NotAllowMoveOwnUnblockedCard_IfWipLimitExceed()
         {
             var moveOwnCardBehaviour = new MoveOwnCardForwardBehaviour();
-            var playerName = "Ivan";
-            var card = Create.Card.OwnedTo(playerName).InProgressState().Build();
-            var card2= Create.Card.OwnedTo(playerName).InTestingState().WhichBlocked().Build();
             var wipLimit = Create.WipLimit.WithLimit(1).Build();
-            var board = Create.Board.WithCards(card,card2).WithWipLimit(wipLimit).Build();
+            var boardMap = $@"  +-------------------------------+
+                                +InProgress|InTesting |Completed+
+                                +-------------------------------+
+                                +Ivan      |Ivan*     |         +
+                                +          |          |         +
+                                +-------------------------------+";
+            var board = Create.Board
+              .FromMap(boardMap)
+              .WithWipLimit(wipLimit)
+              .Build();
 
-
-            Assert.False(moveOwnCardBehaviour.CanApply(playerName, board, CoinSide.Tails));
+            Assert.False(moveOwnCardBehaviour.CanApply("Ivan", board, CoinSide.Tails));
 
         }
 
@@ -72,13 +83,19 @@ namespace Featureban.Tests.PlayerBehave
         public void AllowMoveOwnUnblockedCard_WipLimitNotExceed()
         {
             var moveOwnCardBehaviour = new MoveOwnCardForwardBehaviour();
-            var playerName = "Ivan";
-            var card = Create.Card.OwnedTo(playerName).InProgressState().Build();
             var wipLimit = Create.WipLimit.WithLimit(1).Build();
-            var board = Create.Board.WithCards(card).WithWipLimit(wipLimit).Build();
+            var boardMap = $@"  +-------------------------------+
+                                +InProgress|InTesting |Completed+
+                                +-------------------------------+
+                                +Ivan      |          |         +
+                                +          |          |         +
+                                +-------------------------------+";
+            var board = Create.Board
+              .FromMap(boardMap)
+              .WithWipLimit(wipLimit)
+              .Build();
 
-
-            Assert.True(moveOwnCardBehaviour.CanApply(playerName, board, CoinSide.Tails));
+            Assert.True(moveOwnCardBehaviour.CanApply("Ivan", board, CoinSide.Tails));
 
         }
 

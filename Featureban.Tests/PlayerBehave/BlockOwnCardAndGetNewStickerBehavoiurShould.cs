@@ -42,15 +42,26 @@ namespace Featureban.Tests.PlayerBehave
         public void GetNewCardAndNotBlockBlockedCard_IfNoOwnUnblockedCard()
         {
             var blockOwnAndGetNewBehave = new BlockOwnAndGetNewSticker();
-            var playerName = "Ivan";
-            var card = Create.Card.WhichBlocked().OwnedTo(playerName).Build();
-            var board = Create.Board.WithCards(card).Build();
+            var boardMap = $@"  +-------------------------------+
+                                +InProgress|InTesting |Completed+
+                                +-------------------------------+
+                                +Ivan*     |          |         +
+                                +          |          |         +
+                                +-------------------------------+";
+            var board = Create.Board
+                .FromMap(boardMap)
+                .Build();
 
-            var newBoard = blockOwnAndGetNewBehave.Apply(playerName, board, CoinSide.Eagle);
+            var newBoard = blockOwnAndGetNewBehave.Apply("Ivan", board, CoinSide.Eagle);
 
-            Assert.True(blockOwnAndGetNewBehave.CanApply(playerName, board, CoinSide.Eagle));
-            Assert.Single(newBoard.Cards, c => c.IsBlocked);
-            Assert.Single(newBoard.Cards, c => !c.IsBlocked);
+            Assert.True(blockOwnAndGetNewBehave.CanApply("Ivan", board, CoinSide.Eagle));
+            AssertBoard.Equals($@"+-------------------------------+
+                                  +InProgress|InTesting |Completed+
+                                  +-------------------------------+
+                                  +Ivan      |          |         +
+                                  +Ivan*     |          |         +
+                                  +-------------------------------+", newBoard);
+
         }
 
     }

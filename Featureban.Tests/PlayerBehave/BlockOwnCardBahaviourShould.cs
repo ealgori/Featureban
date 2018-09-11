@@ -42,11 +42,18 @@ namespace Featureban.Tests.PlayerBehave
         public void NotAllowBlockOwnUnBlockedCard_IfOwnCardBlocked()
         {
             var blockCardBehaviour = new BlockOwnCardBahaviour();
-            var playerName = "Ivan";
-            var card = Create.Card.WhichBlocked().OwnedTo(playerName).Build();
-            var board = Create.Board.WithCards(card).Build();
+            var boardMap = $@"  +-------------------------------+
+                                +InProgress|InTesting |Completed+
+                                +-------------------------------+
+                                +Ivan*     |          |         +
+                                +          |          |         +
+                                +-------------------------------+";
+            var board = Create.Board
+                .FromMap(boardMap)
+                .Build();
 
-            Assert.False(blockCardBehaviour.CanApply(playerName, board, CoinSide.Eagle));
+
+            Assert.False(blockCardBehaviour.CanApply("Ivan", board, CoinSide.Eagle));
 
         }
     }

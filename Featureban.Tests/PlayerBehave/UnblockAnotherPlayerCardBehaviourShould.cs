@@ -43,11 +43,17 @@ namespace Featureban.Tests.PlayerBehave
         public void NotAllowUnblockAnotherPlayerBlockedCard_IfNoBlockedCards()
         {
             var unblockAnotherPlayerCardBehaviour = new UnblockAnotherPlayerCardBehaviour(); ;
-            var playerName = "Ivan";
-            var card = Create.Card.Build();
-            var board = Create.Board.WithCards(card).Build();
+            var boardMap = $@"  +-------------------------------+
+                                +InProgress|InTesting |Completed+
+                                +-------------------------------+
+                                +Vova      |          |         +
+                                +          |          |         +
+                                +-------------------------------+";
+            var board = Create.Board
+              .FromMap(boardMap)
+              .Build();
 
-            Assert.False(unblockAnotherPlayerCardBehaviour.CanApply(playerName, board, CoinSide.Tails));
+            Assert.False(unblockAnotherPlayerCardBehaviour.CanApply("Ivan", board, CoinSide.Tails));
 
         }
     }

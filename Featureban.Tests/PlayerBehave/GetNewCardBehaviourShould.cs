@@ -40,12 +40,18 @@ namespace Featureban.Tests.PlayerBehave
         {
             var getNewCardBehaviour = new GetNewCardBahaviour();
             var wipLimit = Create.WipLimit.WithLimit(1).Build();
-            var playerName = "Ivan";
-            var card = Create.Card.OwnedTo(playerName).InProgressState().Build();
-            var board = Create.Board.WithCards(card).WithWipLimit(wipLimit).Build();
+            var boardMap = $@"  +-------------------------------+
+                                +InProgress|InTesting |Completed+
+                                +-------------------------------+
+                                +Ivan      |          |         +
+                                +          |          |         +
+                                +-------------------------------+";
+            var board = Create.Board
+              .FromMap(boardMap)
+              .WithWipLimit(wipLimit)
+              .Build();
 
-
-            Assert.False(getNewCardBehaviour.CanApply(playerName, board, CoinSide.Tails));
+            Assert.False(getNewCardBehaviour.CanApply("Ivan", board, CoinSide.Tails));
         }
 
         [Fact]
@@ -53,12 +59,19 @@ namespace Featureban.Tests.PlayerBehave
         {
             var getNewCardBehaviour = new GetNewCardBahaviour();
             var wipLimit = Create.WipLimit.WithLimit(2).Build();
-            var playerName = "Ivan";
-            var card = Create.Card.OwnedTo(playerName).InProgressState().Build();
-            var board = Create.Board.WithCards(card).WithWipLimit(wipLimit).Build();
+            var boardMap = $@"  +-------------------------------+
+                                +InProgress|InTesting |Completed+
+                                +-------------------------------+
+                                +Ivan      |          |         +
+                                +          |          |         +
+                                +-------------------------------+";
+            var board = Create.Board
+              .FromMap(boardMap)
+              .WithWipLimit(wipLimit)
+              .Build();
 
 
-            Assert.True(getNewCardBehaviour.CanApply(playerName, board, CoinSide.Tails));
+            Assert.True(getNewCardBehaviour.CanApply("Ivan", board, CoinSide.Tails));
         }
 
 
