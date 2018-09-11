@@ -13,6 +13,15 @@ namespace Featureban.Domain
 
         public Board(IEnumerable<Card> cards, WipLimit wipLimit)
         {
+            if (wipLimit.Limits
+                .Where(l => l.Value > 0)
+                .Any(l =>
+                    cards
+                        .Count(c => c.State == l.Key) > l.Value)
+                    )
+                throw new ArgumentException("inconsistency board!");
+
+
             WipLimit = wipLimit;
             Cards = cards;
         }
