@@ -25,9 +25,7 @@ namespace Featureban.Tests.PlayerBehave
                                 +Ivan      |          |         +
                                 +          |          |         +
                                 +-------------------------------+";
-            var board = Create.Board
-              .FromMap(boardMap)
-              .Build();
+            var board = Create.Board.FromMap(boardMap);
 
             var newBoard = playerBehaviour.Apply("Ivan", board, CoinSide.Tails);
             AssertBoard.Equals($@"+-------------------------------+
@@ -59,9 +57,7 @@ namespace Featureban.Tests.PlayerBehave
                                 +Ivan      |          |         +
                                 +          |          |         +
                                 +-------------------------------+";
-            var board = Create.Board
-              .FromMap(boardMap)
-              .Build();
+            var board = Create.Board.FromMap(boardMap);
 
 
             var newBoard = playerBehaviour.Apply("Ivan", board, CoinSide.Tails);

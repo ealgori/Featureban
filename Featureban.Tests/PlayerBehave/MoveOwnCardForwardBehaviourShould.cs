@@ -21,9 +21,7 @@ namespace Featureban.Tests.PlayerBehave
                                 +Ivan      |          |         +
                                 +          |          |         +
                                 +-------------------------------+";
-            var board = Create.Board
-              .FromMap(boardMap)
-              .Build();
+            var board = Create.Board.FromMap(boardMap);
 
 
 
@@ -51,9 +49,7 @@ namespace Featureban.Tests.PlayerBehave
                                 +Ivan*     |          |         +
                                 +          |          |         +
                                 +-------------------------------+";
-            var board = Create.Board
-              .FromMap(boardMap)
-              .Build();
+            var board = Create.Board.FromMap(boardMap);
 
             Assert.False(moveOwnCardBehaviour.CanApply("Ivan", board, CoinSide.Tails));
 
@@ -63,17 +59,14 @@ namespace Featureban.Tests.PlayerBehave
         public void NotAllowMoveOwnUnblockedCard_IfWipLimitExceed()
         {
             var moveOwnCardBehaviour = new MoveOwnCardForwardBehaviour();
-            var wipLimit = Create.WipLimit.WithLimit(1).Build();
             var boardMap = $@"  +-------------------------------+
                                 +InProgress|InTesting |Completed+
                                 +-------------------------------+
                                 +Ivan      |Ivan*     |         +
                                 +          |          |         +
-                                +-------------------------------+";
-            var board = Create.Board
-              .FromMap(boardMap)
-              .WithWipLimit(wipLimit)
-              .Build();
+                                #-------------------------------#
+                                +Limit:1   |Limit:1   |         +";
+            var board = Create.Board.FromMap(boardMap);
 
             Assert.False(moveOwnCardBehaviour.CanApply("Ivan", board, CoinSide.Tails));
 
@@ -90,10 +83,7 @@ namespace Featureban.Tests.PlayerBehave
                                 +Ivan      |          |         +
                                 +          |          |         +
                                 +-------------------------------+";
-            var board = Create.Board
-              .FromMap(boardMap)
-              .WithWipLimit(wipLimit)
-              .Build();
+            var board = Create.Board.FromMap(boardMap);
 
             Assert.True(moveOwnCardBehaviour.CanApply("Ivan", board, CoinSide.Tails));
 

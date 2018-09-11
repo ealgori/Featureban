@@ -17,10 +17,9 @@ namespace Featureban.Tests.DSL
             return this;
         }
 
-        public BoardBuilder FromMap (string boardMap)
+        public Board FromMap (string boardMap)
         {
-            cards = BoardParser.Parse(boardMap).Cards;
-            return this;
+            return BoardParser.Parse(boardMap);
         }
 
         public BoardBuilder WithWipLimit(WipLimit wipLimit)

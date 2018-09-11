@@ -21,9 +21,7 @@ namespace Featureban.Tests.PlayerBehave
                                 +Vova*     |          |         +
                                 +          |          |         +
                                 +-------------------------------+";
-            var board = Create.Board
-              .FromMap(boardMap)
-              .Build();
+            var board = Create.Board.FromMap(boardMap);
 
 
             var newBoard = unblockAnotherPlayerCardBehaviour.Apply("Ivan", board, CoinSide.Tails);
@@ -49,9 +47,7 @@ namespace Featureban.Tests.PlayerBehave
                                 +Vova      |          |         +
                                 +          |          |         +
                                 +-------------------------------+";
-            var board = Create.Board
-              .FromMap(boardMap)
-              .Build();
+            var board = Create.Board.FromMap(boardMap);
 
             Assert.False(unblockAnotherPlayerCardBehaviour.CanApply("Ivan", board, CoinSide.Tails));
 

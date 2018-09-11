@@ -21,9 +21,7 @@ namespace Featureban.Tests.PlayerBehave
                                 +Ivan      |          |         +
                                 +          |          |         +
                                 +-------------------------------+";
-            var board = Create.Board
-              .FromMap(boardMap)
-              .Build();
+            var board = Create.Board.FromMap(boardMap);
 
 
             var newBoard = blockCardBehaviour.Apply("Ivan", board, CoinSide.Eagle);
@@ -48,9 +46,7 @@ namespace Featureban.Tests.PlayerBehave
                                 +Ivan*     |          |         +
                                 +          |          |         +
                                 +-------------------------------+";
-            var board = Create.Board
-                .FromMap(boardMap)
-                .Build();
+            var board = Create.Board.FromMap(boardMap);
 
 
             Assert.False(blockCardBehaviour.CanApply("Ivan", board, CoinSide.Eagle));

@@ -30,9 +30,7 @@ namespace Featureban.Tests
                                 +Ivan      |          |         +
                                 +Ivan*     |          |         +
                                 +-------------------------------+";
-            var board = Create.Board
-                .FromMap(boardMap)
-                .Build();
+            var board = Create.Board.FromMap(boardMap);
 
             var newBoard = player.Play(CoinSide.Tails, board);
 
@@ -56,12 +54,9 @@ namespace Featureban.Tests
                                 +-------------------------------+
                                 +Vova*     |          |         +
                                 +          |          |         +
-                                +-------------------------------+";
-            var wipLimit = Create.WipLimit.WithLimit(1).Build();
-            var board = Create.Board
-                .FromMap(boardMap)
-                .WithWipLimit(wipLimit)
-                .Build();
+                                #-------------------------------#
+                                +Limit:1   |Limit:1   |         +";
+            var board = Create.Board.FromMap(boardMap);
 
             var newBoard = player.Play(CoinSide.Tails, board);
 
@@ -70,7 +65,8 @@ namespace Featureban.Tests
                                   +-------------------------------+
                                   +Vova      |          |         +
                                   +          |          |         +
-                                  +-------------------------------+", newBoard);
+                                  #-------------------------------#
+                                  +Limit:1   |Limit:1   |         +", newBoard);
         }   
         
 
@@ -86,9 +82,7 @@ namespace Featureban.Tests
                                 +Ivan      |          |         +
                                 +          |          |         +
                                 +-------------------------------+";
-            var board = Create.Board
-                .FromMap(boardMap)
-                .Build();
+            var board = Create.Board.FromMap(boardMap);
 
             var newBoard = player.Play(CoinSide.Eagle, board);
 
@@ -108,16 +102,14 @@ namespace Featureban.Tests
             var player = new Runner.DSL.PlayerBuilder()
                 .WithName("Ivan")
                 .Build();
-            var wipLimit = Create.WipLimit.WithLimit(1).Build();
             var boardMap = $@"  +-------------------------------+
                                 +InProgress|InTesting |Completed+
                                 +-------------------------------+
                                 +Ivan*     |          |         +
                                 +          |          |         +
-                                +-------------------------------+";
-            var board = Create.Board
-                .FromMap(boardMap)
-                .WithWipLimit(wipLimit).Build();
+                                #-------------------------------#
+                                +Limit:1   |Limit:1   |         +";
+            var board = Create.Board.FromMap(boardMap);
 
             var newBoard = player.Play(CoinSide.Tails, board);
 
@@ -126,7 +118,8 @@ namespace Featureban.Tests
                                   +-------------------------------+
                                   +Ivan      |          |         +
                                   +          |          |         +
-                                  +-------------------------------+", newBoard);
+                                  #-------------------------------#
+                                  +Limit:1   |Limit:1   |         +", newBoard);
         }
 
 
@@ -136,16 +129,14 @@ namespace Featureban.Tests
             var player = new Runner.DSL.PlayerBuilder()
                 .WithName("Ivan")
                 .Build();
-            var wipLimit = Create.WipLimit.WithInProgressLimit(2).WithInTestingLimit(1).Build();
             var boardMap = $@"  +-------------------------------+
                                 +InProgress|InTesting |Completed+
                                 +-------------------------------+
                                 +Ivan      |Vova      |         +
                                 +          |          |         +
-                                +-------------------------------+";
-            var board = Create.Board
-                .FromMap(boardMap)
-                .WithWipLimit(wipLimit).Build();
+                                #-------------------------------#
+                                +Limit:2   |Limit:1   |         +";
+            var board = Create.Board.FromMap(boardMap);
 
             var newBoard = player.Play(CoinSide.Tails, board);
 
@@ -154,7 +145,8 @@ namespace Featureban.Tests
                                   +-------------------------------+
                                   +Ivan      |Vova      |         +
                                   +Ivan      |          |         +
-                                  +-------------------------------+", newBoard);
+                                  #-------------------------------#
+                                  +Limit:2   |Limit:1   |         +", newBoard);
         }
 
 
@@ -170,12 +162,9 @@ namespace Featureban.Tests
                                 +-------------------------------+
                                 +Ivan      |Vova      |         +
                                 +          |          |         +
-                                +-------------------------------+";
-
-            var wipLimit = Create.WipLimit.WithLimit(1).Build();
-            var board = Create.Board
-                .FromMap(boardMap)
-                .WithWipLimit(wipLimit).Build();
+                                #-------------------------------#
+                                +Limit:1   |Limit:1   |         +";
+            var board = Create.Board.FromMap(boardMap);
 
             var newBoard = player.Play(CoinSide.Tails, board);
 
@@ -184,7 +173,8 @@ namespace Featureban.Tests
                                   +-------------------------------+
                                   +Ivan      |          |Vova     +
                                   +          |          |         +
-                                  +-------------------------------+", newBoard);
+                                  #-------------------------------#
+                                  +Limit:1   |Limit:1   |         +", newBoard);
         }
     }
 }

@@ -19,9 +19,7 @@ namespace Featureban.Tests.PlayerBehave
                                 +Ivan      |          |         +
                                 +          |          |         +
                                 +-------------------------------+";
-            var board = Create.Board
-              .FromMap(boardMap)
-              .Build();
+            var board = Create.Board.FromMap(boardMap);
             var newBoard = getNewCardBehaviour.Apply("Ivan", board,CoinSide.Eagle);
 
             Assert.True(getNewCardBehaviour.CanApply("Ivan", board, CoinSide.Eagle));
@@ -39,17 +37,14 @@ namespace Featureban.Tests.PlayerBehave
         public void NotAllowGetNewCard_IfWipLimitExceed()
         {
             var getNewCardBehaviour = new GetNewCardBahaviour();
-            var wipLimit = Create.WipLimit.WithLimit(1).Build();
             var boardMap = $@"  +-------------------------------+
                                 +InProgress|InTesting |Completed+
                                 +-------------------------------+
                                 +Ivan      |          |         +
                                 +          |          |         +
-                                +-------------------------------+";
-            var board = Create.Board
-              .FromMap(boardMap)
-              .WithWipLimit(wipLimit)
-              .Build();
+                                #-------------------------------#
+                                +Limit:1   |Limit:1   |         +";
+            var board = Create.Board.FromMap(boardMap);
 
             Assert.False(getNewCardBehaviour.CanApply("Ivan", board, CoinSide.Tails));
         }
@@ -58,17 +53,14 @@ namespace Featureban.Tests.PlayerBehave
         public void AllowGetNewCard_IfWipLimitNotExceed()
         {
             var getNewCardBehaviour = new GetNewCardBahaviour();
-            var wipLimit = Create.WipLimit.WithLimit(2).Build();
             var boardMap = $@"  +-------------------------------+
                                 +InProgress|InTesting |Completed+
                                 +-------------------------------+
                                 +Ivan      |          |         +
                                 +          |          |         +
-                                +-------------------------------+";
-            var board = Create.Board
-              .FromMap(boardMap)
-              .WithWipLimit(wipLimit)
-              .Build();
+                                #-------------------------------#
+                                +Limit:2   |Limit:2   |         +";
+            var board = Create.Board.FromMap(boardMap);
 
 
             Assert.True(getNewCardBehaviour.CanApply("Ivan", board, CoinSide.Tails));

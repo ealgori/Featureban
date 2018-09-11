@@ -25,9 +25,7 @@ namespace Featureban.Tests.PlayerBehave
                                 +Vova      |          |         +
                                 +          |          |         +
                                 +-------------------------------+";
-            var board = Create.Board
-              .FromMap(boardMap)
-              .Build();
+            var board = Create.Board.FromMap(boardMap);
 
 
             var newBoard = moveAnotherPlayerCardForwardBehaviour.Apply("Ivan", board,CoinSide.Tails);
@@ -52,9 +50,7 @@ namespace Featureban.Tests.PlayerBehave
                                 +Ivan*     |          |         +
                                 +          |          |         +
                                 +-------------------------------+";
-            var board = Create.Board
-              .FromMap(boardMap)
-              .Build();
+            var board = Create.Board.FromMap(boardMap);
 
 
             Assert.False(moveAnotherPlayerCardForwardBehaviour.CanApply("Ivan", board, CoinSide.Tails));
@@ -65,18 +61,14 @@ namespace Featureban.Tests.PlayerBehave
         public void NotAllowsMoveAnotherPlayerUnblockedCard_IfDropTailsAndWipLimitExceed()
         {
             var moveAnotherPlayerCardForwardBehaviour = new MoveAnotherPlayerCardForwardBehaviour();
-            var wipLimit = Create.WipLimit.WithLimit(1).Build();
             var boardMap = $@"  +-------------------------------+
                                 +InProgress|InTesting |Completed+
                                 +-------------------------------+
                                 +Vova      |Ivan      |         +
                                 +          |          |         +
-                                +-------------------------------+";
-            var board = Create.Board
-              .FromMap(boardMap)
-              .WithWipLimit(wipLimit)
-              .Build();
-
+                                #-------------------------------#
+                                +Limit:1   |Limit:1   |         +";
+            var board = Create.Board.FromMap(boardMap);
 
             Assert.False(moveAnotherPlayerCardForwardBehaviour.CanApply("Ivan", board, CoinSide.Tails));
 
@@ -93,10 +85,7 @@ namespace Featureban.Tests.PlayerBehave
                                 +Vova      |          |         +
                                 +          |          |         +
                                 +-------------------------------+";
-            var board = Create.Board
-              .FromMap(boardMap)
-              .WithWipLimit(wipLimit)
-              .Build();
+            var board = Create.Board.FromMap(boardMap);
 
 
             Assert.True(moveAnotherPlayerCardForwardBehaviour.CanApply("Ivan", board, CoinSide.Tails));

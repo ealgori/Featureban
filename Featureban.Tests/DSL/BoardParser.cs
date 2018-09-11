@@ -1,28 +1,39 @@
 ﻿using Featureban.Domain;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Featureban.Tests.DSL
 {
     internal static class BoardParser
     {
-        public static Board Parse(string board)
+        public static Board Parse(string boardMap)
         {
             var cards = new List<Card>();
-            var collapsedBoard = board.Replace(" ", "").Replace("+", "").Replace("-", "");
+            var collapsedBoard = boardMap.Replace(" ", "").Replace("+", "").Replace("-", "");
 
             var rows = collapsedBoard.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
-            for (int row = 1; row < rows.Length; row++)
+            var mapHasLimitsRow = false;
+            for (int rowNum = 1; rowNum < rows.Length; rowNum++)
             {
-                var columns = rows[row].Split('|');
-                for (int col = 0; col < columns.Length; col++)
+                var row = rows[rowNum];
+                if (row.Contains("#") && string.IsNullOrEmpty(row.Replace("+", "").Replace("-", "").Replace("|","").Replace("#","")))
                 {
-                    var column = columns[col];
+                    if(rowNum!=(rows.Length-1))
+                    {
+                        mapHasLimitsRow = true;
+                    }
+                    break;
+                }
+                var columns = rows[rowNum].Split('|');
+                for (int colNum = 0; colNum < columns.Length; colNum++)
+                {
+                    var column = columns[colNum];
                     if (!string.IsNullOrEmpty(column.Replace(" ", "")))
                     {
                         var card = Create.Card.OwnedTo(column.Trim(new char[] { ' ', '*' }));
-                        card = card.InState(col);
+                        card = card.InState(colNum);
                         if (column.Contains('*'))
                         {
                             card = card.WhichBlocked();
@@ -31,7 +42,27 @@ namespace Featureban.Tests.DSL
                     }
                 }
             }
-            return Create.Board.WithCards(cards).Build();
+
+            var boardBuilder = Create.Board.WithCards(cards);
+
+            if (mapHasLimitsRow)
+            {
+                var wipLimitBuilder = Create.WipLimit;
+                var limitCols = rows.Last().Split("|").Select(col => new string(col.Where(c => Char.IsDigit(c)).ToArray())).ToList();
+                for (int col = 0; col < limitCols.Count(); col++)
+                {
+
+                    if (int.TryParse(limitCols[col], out int limit))
+                    {
+                        if (col == 0)
+                            wipLimitBuilder.WithInProgressLimit(limit);
+                        if (col == 1)
+                            wipLimitBuilder.WithInTestingLimit(limit);
+                    }
+                }
+                boardBuilder.WithWipLimit(wipLimitBuilder.Build());
+            }
+            return boardBuilder.Build();
         }
     }
 }
