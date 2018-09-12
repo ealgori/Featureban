@@ -21,7 +21,7 @@ namespace Featureban.Tests
 
             player.DropCoin(coinMock.Object);
 
-            coinMock.Verify(c => c.Drop(), Times.AtLeastOnce);
+            coinMock.Verify(c => c.Drop(), Times.Once);
         }
 
         [Fact]
