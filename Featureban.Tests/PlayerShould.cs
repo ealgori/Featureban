@@ -16,18 +16,12 @@ namespace Featureban.Tests
         [Fact]
         public void CanDropCoin()
         {
-            
             var player = Create.Player.Build();
-            var game = Create.Game
-                .WithTwoEagleCoin()
-                .WithPlayers(new List<Player> {player})
-                .Build();
+            var coinMock = Create.CoinMock.Build();
 
-            var coinSide = player.DropCoin(game.Coin);
+            player.DropCoin(coinMock.Object);
 
-            Assert.Equal(CoinSide.Eagle, coinSide);
-
-
+            coinMock.Verify(c => c.Drop(), Times.AtLeastOnce);
         }
 
         [Fact]
