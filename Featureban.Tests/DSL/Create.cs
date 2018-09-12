@@ -14,7 +14,9 @@ namespace Featureban.Tests.DSL
         public static CardBuilder Card => new CardBuilder();
         public static BoardBuilder Board => new BoardBuilder();
         public static PlayerBehaviourBuilder PlayerBehavoiur => new PlayerBehaviourBuilder();
+
         public static WipLimitBuilder WipLimit => new WipLimitBuilder();
         public static CoinMockBuilder CoinMock => new CoinMockBuilder();
+        public static PlayerBehaviourMockBuilder PlayerBehavoiurMock => new PlayerBehaviourMockBuilder();
     }
 }
