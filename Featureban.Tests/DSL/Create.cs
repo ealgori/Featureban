@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Featureban.Domain.Interfaces;
+using Moq;
 
 namespace Featureban.Tests.DSL
 {
@@ -14,5 +15,6 @@ namespace Featureban.Tests.DSL
         public static BoardBuilder Board => new BoardBuilder();
         public static PlayerBehaviourBuilder PlayerBehavoiur => new PlayerBehaviourBuilder();
         public static WipLimitBuilder WipLimit => new WipLimitBuilder();
+        public static CoinMockBuilder CoinMock => new CoinMockBuilder();
     }
 }

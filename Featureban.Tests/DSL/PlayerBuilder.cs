@@ -30,6 +30,14 @@ namespace Featureban.Tests.DSL
             return this;
         }
 
+        public PlayerBuilder WithBehaviour(IPlayerBehaviour behaviour)
+        {
+            if (behaviour == null)
+                throw new ArgumentNullException("Player behavior is null");
+            _playerBehave = behaviour;
+            return this;
+        }
+
         public Player Build()
         {
             return new Player(_playerBehave);

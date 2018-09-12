@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Featureban.Domain;
 using Featureban.Tests.DSL;
+using Moq;
 using Xunit;
 
 namespace Featureban.Tests
@@ -115,5 +116,23 @@ namespace Featureban.Tests
 
             Assert.Equal(5, game.StagesDone);
         }
+
+
+        [Fact]
+        public void DropCoin1Times_WhenPlayerIterate()
+        {
+            var player = Create.Player.Build();
+            var coinMock = Create.CoinMock.Build();
+            var game = Create.Game
+                .WithPlayers(new List<Player> { player })
+                .WithCoin(coinMock.Object)
+                .Build();
+
+            game.PlayerIterate(player);
+
+            coinMock.Verify(c => c.Drop(), Times.Once);
+        }
+
+
     }
 }
