@@ -18,5 +18,14 @@ namespace Featureban.Tests.DSL
                     Times.Once);
 
         }
+
+        public static void ApplyInvokedOnce(Mock<IPlayerBehaviour> playerBehaviourMock)
+        {
+            playerBehaviourMock.Verify(b => b.Apply(It.IsAny<string>(),
+                    It.IsAny<Board>(),
+                    It.IsAny<CoinSide>()),
+                    Times.Once);
+
+        }
     }
 }

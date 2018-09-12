@@ -33,13 +33,23 @@ namespace Featureban.Tests
         [Fact]
         public void InvokeCanApply1Times_WhenPlay()
         {
-
             var bahaviourMock = Create.PlayerBehavoiurMock.Build();
             var player = Create.Player.WithBehaviour(bahaviourMock.Object).Build();
 
-            var coinSide = player.Play(CoinSide.Eagle, Create.Board.Build());
+            player.Play(CoinSide.Eagle, Create.Board.Build());
 
             AssertBahaviour.CanApplyInvokedOnce(bahaviourMock);
+        }
+
+        [Fact]
+        public void InvokeApply1Times_WhenPlay()
+        {
+            var bahaviourMock = Create.PlayerBehavoiurMock.Build();
+            var player = Create.Player.WithBehaviour(bahaviourMock.Object).Build();
+
+            player.Play(CoinSide.Eagle, Create.Board.Build());
+
+            AssertBahaviour.ApplyInvokedOnce(bahaviourMock);
         }
 
 
