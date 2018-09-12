@@ -119,7 +119,7 @@ namespace Featureban.Tests
 
 
         [Fact]
-        public void DropCoin1Times_WhenPlayerIterate()
+        public void DropCoinOnce_WhenPlayerIterate()
         {
             var player = Create.Player.Build();
             var coinMock = Create.CoinMock.Build();
