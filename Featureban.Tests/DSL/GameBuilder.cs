@@ -20,6 +20,12 @@ namespace Featureban.Tests.DSL
             return this;
         }
 
+        public GameBuilder WithCoin(ICoin coin)
+        {
+            this.coin = coin;
+            return this;
+        }
+
         public GameBuilder WithTwoTailsCoin()
         {
             this.coin = Create.Coin.WhichAlwaysDropOn(CoinSide.Tails).Build();

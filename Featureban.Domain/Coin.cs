@@ -9,7 +9,7 @@ namespace Featureban.Domain
     public class Coin:ICoin
     {
         private readonly Random _rnd = new Random(DateTime.Now.Millisecond);
-        public CoinSide Drop()
+        public virtual CoinSide Drop()
         {
             return _rnd.Next(1, 10) % 2 > 0
                 ? CoinSide.Eagle
