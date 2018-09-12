@@ -31,7 +31,7 @@ namespace Featureban.Tests
         }
 
         [Fact]
-        public void InvokeCanApply1Times_WhenPlay()
+        public void InvokeCanApplyOnce_WhenPlay()
         {
             var bahaviourMock = Create.PlayerBehavoiurMock.Build();
             var player = Create.Player.WithBehaviour(bahaviourMock.Object).Build();
@@ -42,7 +42,7 @@ namespace Featureban.Tests
         }
 
         [Fact]
-        public void InvokeApply1Times_WhenPlay()
+        public void InvokeApplyOnce_WhenPlay()
         {
             var bahaviourMock = Create.PlayerBehavoiurMock.Build();
             var player = Create.Player.WithBehaviour(bahaviourMock.Object).Build();
