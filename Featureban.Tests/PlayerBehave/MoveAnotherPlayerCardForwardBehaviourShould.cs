@@ -15,10 +15,6 @@ namespace Featureban.Tests.PlayerBehave
         public void MoveAnotherPlayerUnblockedCard_IfCardUnblocked()
         {
             var moveAnotherPlayerCardForwardBehaviour = new MoveAnotherPlayerCardForwardBehaviour();
-            //var playerName = "Ivan";
-            //var card = Create.Card.Build();
-            //var board = Create.Board.WithCards(card).Build();
-
             var boardMap = $@"  +-------------------------------+
                                 +InProgress|InTesting |Completed+
                                 +-------------------------------+
@@ -26,7 +22,6 @@ namespace Featureban.Tests.PlayerBehave
                                 +          |          |         +
                                 +-------------------------------+";
             var board = Create.Board.FromMap(boardMap);
-
 
             var newBoard = moveAnotherPlayerCardForwardBehaviour.Apply("Ivan", board,CoinSide.Tails);
 
@@ -52,7 +47,6 @@ namespace Featureban.Tests.PlayerBehave
                                 +-------------------------------+";
             var board = Create.Board.FromMap(boardMap);
 
-
             Assert.False(moveAnotherPlayerCardForwardBehaviour.CanApply("Ivan", board, CoinSide.Tails));
 
         }
@@ -71,7 +65,6 @@ namespace Featureban.Tests.PlayerBehave
             var board = Create.Board.FromMap(boardMap);
 
             Assert.False(moveAnotherPlayerCardForwardBehaviour.CanApply("Ivan", board, CoinSide.Tails));
-
         }
 
         [Fact]
@@ -87,9 +80,7 @@ namespace Featureban.Tests.PlayerBehave
                                 +-------------------------------+";
             var board = Create.Board.FromMap(boardMap);
 
-
             Assert.True(moveAnotherPlayerCardForwardBehaviour.CanApply("Ivan", board, CoinSide.Tails));
-
         }
 
 

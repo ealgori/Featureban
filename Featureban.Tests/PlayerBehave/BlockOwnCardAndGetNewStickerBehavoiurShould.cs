@@ -24,7 +24,6 @@ namespace Featureban.Tests.PlayerBehave
                                 +-------------------------------+";
             var board = Create.Board.FromMap(boardMap);
 
-
             var newBoard = blockOwnAndGetNewBehave.Apply("Ivan", board, CoinSide.Eagle);
 
             Assert.True(blockOwnAndGetNewBehave.CanApply("Ivan", board, CoinSide.Eagle));

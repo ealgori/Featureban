@@ -45,18 +45,5 @@ namespace Featureban.Tests
 
             AssertBahaviour.ApplyInvokedOnce(bahaviourMock);
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 }

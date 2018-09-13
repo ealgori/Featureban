@@ -92,10 +92,6 @@ namespace Featureban.Tests
                     player=> player.Name == card.PlayerName
                 )
             );
-            
-
-
-
         }
 
         [Fact]

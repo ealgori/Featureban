@@ -18,7 +18,6 @@ namespace Featureban.Tests.PlayerBehave
             var playerBehaviour = Create.PlayerBehavoiur
                 .WithTailBehaviours(new UnblockOwnCardBahaviour())
                 .Build();
-
             var boardMap = $@"  +-------------------------------+
                                 +InProgress|InTesting |Completed+
                                 +-------------------------------+
@@ -28,6 +27,7 @@ namespace Featureban.Tests.PlayerBehave
             var board = Create.Board.FromMap(boardMap);
 
             var newBoard = playerBehaviour.Apply("Ivan", board, CoinSide.Tails);
+
             AssertBoard.Equals($@"+-------------------------------+
                                   +InProgress|InTesting |Completed+
                                   +-------------------------------+
@@ -59,14 +59,10 @@ namespace Featureban.Tests.PlayerBehave
                                 +-------------------------------+";
             var board = Create.Board.FromMap(boardMap);
 
-
             var newBoard = playerBehaviour.Apply("Ivan", board, CoinSide.Tails);
-
 
             Assert.True(getNewCardBehaviour.CanApply("Ivan",board,CoinSide.Tails));
             Assert.True(moveOwnCardBehaviour.CanApply("Ivan", board, CoinSide.Tails));
-          
-
             AssertBoard.Equals($@"+-------------------------------+
                                   +InProgress|InTesting |Completed+
                                   +-------------------------------+

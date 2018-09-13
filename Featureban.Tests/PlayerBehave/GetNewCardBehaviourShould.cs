@@ -62,7 +62,6 @@ namespace Featureban.Tests.PlayerBehave
                                 +Limit:2   |Limit:2   |         +";
             var board = Create.Board.FromMap(boardMap);
 
-
             Assert.True(getNewCardBehaviour.CanApply("Ivan", board, CoinSide.Tails));
         }
 

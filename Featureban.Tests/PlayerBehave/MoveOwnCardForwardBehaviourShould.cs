@@ -23,8 +23,6 @@ namespace Featureban.Tests.PlayerBehave
                                 +-------------------------------+";
             var board = Create.Board.FromMap(boardMap);
 
-
-
             var newBoard = moveOwnCardBehaviour.Apply("Ivan", board,CoinSide.Tails);
 
             Assert.True(moveOwnCardBehaviour.CanApply("Ivan", board, CoinSide.Tails));
@@ -34,7 +32,6 @@ namespace Featureban.Tests.PlayerBehave
                                   +          |Ivan      |         +
                                   +          |          |         +
                                   +-------------------------------+", newBoard);
-
         }
 
 
@@ -52,7 +49,6 @@ namespace Featureban.Tests.PlayerBehave
             var board = Create.Board.FromMap(boardMap);
 
             Assert.False(moveOwnCardBehaviour.CanApply("Ivan", board, CoinSide.Tails));
-
         }
 
         [Fact]
@@ -69,7 +65,6 @@ namespace Featureban.Tests.PlayerBehave
             var board = Create.Board.FromMap(boardMap);
 
             Assert.False(moveOwnCardBehaviour.CanApply("Ivan", board, CoinSide.Tails));
-
         }
 
         [Fact]
@@ -86,7 +81,6 @@ namespace Featureban.Tests.PlayerBehave
             var board = Create.Board.FromMap(boardMap);
 
             Assert.True(moveOwnCardBehaviour.CanApply("Ivan", board, CoinSide.Tails));
-
         }
 
 

@@ -14,13 +14,9 @@ namespace Featureban.Tests
 {
     public class RunnerPlayerBuilderShould
     {
-      
-
-
         [Fact]
         public void CreatePlayerWhichMoveOwnCardFirstly_IfDropTails()
         {
-
             var player = new Runner.DSL.PlayerBuilder()
                 .WithName("Ivan")
                 .Build();
@@ -98,7 +94,6 @@ namespace Featureban.Tests
         [Fact]
         public void CreatePlayerWhichUnblockOwnCard_IfDropTailsAndCantGetNewOrMoveOwnCard()
         {
-
             var player = new Runner.DSL.PlayerBuilder()
                 .WithName("Ivan")
                 .Build();

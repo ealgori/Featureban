@@ -23,7 +23,6 @@ namespace Featureban.Tests.PlayerBehave
                                 +-------------------------------+";
             var board = Create.Board.FromMap(boardMap);
 
-
             var newBoard = unblockAnotherPlayerCardBehaviour.Apply("Ivan", board, CoinSide.Tails);
 
             Assert.True(unblockAnotherPlayerCardBehaviour.CanApply("Ivan", board, CoinSide.Tails));
@@ -50,7 +49,6 @@ namespace Featureban.Tests.PlayerBehave
             var board = Create.Board.FromMap(boardMap);
 
             Assert.False(unblockAnotherPlayerCardBehaviour.CanApply("Ivan", board, CoinSide.Tails));
-
         }
     }
 }

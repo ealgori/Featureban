@@ -49,7 +49,6 @@ namespace Featureban.Tests.PlayerBehave
             var board = Create.Board.FromMap(boardMap);
 
             Assert.False(unblockCardBehaviour.CanApply("Ivan", board, CoinSide.Tails));
-
         }
 
 
